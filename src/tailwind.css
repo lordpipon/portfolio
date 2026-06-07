@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
 @import "tailwindcss";
 
 @layer utilities {
@@ -7,7 +8,7 @@
 }
 
 @theme inline {
-    /* --font-sans: Inter */
+    --font-sans: "JetBrains Mono", monospace;
     /* --height-screen: 100dvh */
 
     --color-background: #1a1a1a;

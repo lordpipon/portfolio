@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 public/cli.txt
 cli/cli.js
+
+package-lock.json
+bun.lock

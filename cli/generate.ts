@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 
 const WIDTH = 50;
-const WEBSITE_URL = "https://riskymh.dev";
-const GITUHB_URL = "https://github.com/RiskyMH";
+const WEBSITE_URL = "https://freeutka.is-a.dev";
+const GITUHB_URL = "https://github.com/freeutka";
 const DISCORD_URL = "https://discord.gg/qK9pfnB3Yv";
 const EMAIL_MAILTO = atob("bWFpbHRvOm1pY2hhZWxAcmlza3ltaC5kZXY");
 
@@ -30,7 +30,7 @@ function center(text: string) {
 
 const content = `${gray("╭" + "─".repeat(WIDTH - 2) + "╮")}
 ${gray("│" + " ".repeat(WIDTH - 2) + "│")}
-${center(bold("🔥 RiskyMH") + "  ")}
+${center(bold("🔥 freeutka") + "  ")}
 ${gray("│" + " ".repeat(WIDTH - 2) + "│")}
 ${center(lightGray("Just a random person on the internet"))}
 ${center(

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "rm -rf dist && bun run src/dev.tsx",
+    "dev": "bun run src/dev.tsx",
     "start": "bun preview",
     "build": "rm -rf dist && bun cli/generate.ts && bun --preload=./src/plugin.tsx run src/build.tsx",
     "preview": "bunx serve dist -p 3000"

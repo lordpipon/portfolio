@@ -1,11 +1,11 @@
 {
-    "name": "riskymh",
+    "name": "freeutka",
     "description": "Just a random person on the internet!",
-    "homepage": "https://riskymh.dev",
+    "homepage": "https://freeutka.is-a.dev",
     "version": "1.0.0",
-    "author": "RiskyMH",
+    "author": "freeutka",
     "bin": {
-        "riskymh": "./cli.js"
+        "freeutka": "./cli.js"
     },
     "scripts": {
         "prepack": "bun ./generate.ts",
@@ -16,7 +16,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/RiskyMH/website.git",
+        "url": "https://github.com/freeutka/website.git",
         "directory": "cli"
     }
 }
