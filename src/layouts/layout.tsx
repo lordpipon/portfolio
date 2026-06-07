@@ -29,8 +29,8 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
       <meta property="og:title" content="freeutka" />
       <meta property="og:description" content="Just a random person on the internet" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://website-zeta-livid-18.vercel.app/" />
-      <meta property="og:image" content="https://website-zeta-livid-18.vercel.app/fire_anim.png" />
+      <meta property="og:url" content="https://freeutka.is-a.dev" />
+      <meta property="og:image" content="https://freeutka.is-a.devfire_anim.png" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify({
           "@context": "https://schema.org",
@@ -38,8 +38,8 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
           name: "freeutka",
           author: { "@type": "Person", name: "freeutka" },
           description: "Just a random person on the internet.",
-          logo: "https://website-zeta-livid-18.vercel.app/fire_anim.png",
-          url: "https://website-zeta-livid-18.vercel.app/"
+          logo: "https://freeutka.is-a.devfire_anim.png",
+          url: "https://freeutka.is-a.dev"
         })
       }} />
       {/* MUST NOT REMOVE */}
