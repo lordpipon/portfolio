@@ -1,10 +1,8 @@
 import React from "react";
-import ExternalIcon from "./icons/external-icon.svg";
 import GlobeIcon from "./icons/globe-icon.svg";
 import DiscordIcon from "./icons/discord-icon.svg";
 import GitHubIcon from "./icons/github-icon.svg";
 import LinkButton from "./link-button";
-import TwitterIcon from "./icons/twitter-icon.svg";
 
 const linkConfig = {
   website: {
@@ -22,10 +20,6 @@ const linkConfig = {
   github: {
     text: "GitHub",
     Icon: GitHubIcon,
-  },
-  twitter: {
-    text: "Twitter",
-    Icon: TwitterIcon,
   },
 };
 

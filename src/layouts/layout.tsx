@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
       <meta property="og:description" content="Just a random person on the internet" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://freeutka.is-a.dev" />
-      <meta property="og:image" content="https://freeutka.is-a.devfire_anim.png" />
+      <meta property="og:image" content="https://freeutka.is-a.dev/freeutka.png" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify({
           "@context": "https://schema.org",
@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
           name: "freeutka",
           author: { "@type": "Person", name: "freeutka" },
           description: "Just a random person on the internet.",
-          logo: "https://freeutka.is-a.devfire_anim.png",
+          logo: "https://freeutka.is-a.dev/freeutka.png",
           url: "https://freeutka.is-a.dev"
         })
       }} />
