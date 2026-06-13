@@ -1,0 +1,61 @@
+[
+    {
+        "title": "Favorite",
+        "projects": [
+            {
+                "name": "Jexaddons",
+                "icon": "/jexaddons.png",
+                "links": [
+                    {
+                        "url": "https://jex.freeutka.xyz",
+                        "type": "website",
+                        "primary": true
+                    }
+                ],
+                "description": "Jexactyl Addons written by the community"
+            }
+        ]
+    },
+    {
+        "title": "Management panel",
+        "projects": [
+            {
+                "name": "Xactyl",
+                "icon": "/xactyl.png",
+                "links": [
+                    {
+                        "url": "https://github.com/freeutka/Xactyl",
+                        "type": "github",
+                        "primary": true
+                    },
+                    {
+                        "type": "discord-bot-invite",
+                        "url": "https://discord.gg/6fcpK85yYu"
+                    },
+                    {
+                        "url": "https://freeutka.github.io/Xactyl-docs/",
+                        "type": "website"
+                    }
+                ],
+                "description": "Xactyl is customized fork of Pterodactyl"
+            }
+        ]
+    },
+    {
+        "title": "Web Apps",
+        "projects": [
+            {
+                "name": "DuckCDN",
+                "icon": "/github.png",
+                "links": [
+                    {
+                        "url": "https://github.com/freeutka/DuckCDN",
+                        "type": "github",
+                        "primary": true
+                    }
+                ],
+                "description": "A simple and minimalistic image CDN built with PHP"
+            }
+        ]
+    }
+]
