@@ -46,7 +46,9 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
       <style id="tailwind-styles">/*tailwind*/</style>
     </head>
     <div className="fixed bottom-2 right-4 text-xs text-text-secondary/60 hover:cursor-default">
-      <a title="Commit">{commit}</a>
+      <a href={`https://github.com/freeutka/website/commit/${commit}`} className="underline hover:no-underline" title="Commit">
+        {commit}
+      </a>
     </div>
     <body className="font-sans antialiased">
       {children}
