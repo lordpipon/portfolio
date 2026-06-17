@@ -2,7 +2,7 @@
 
 Welcome to my portfolio website! This is a showcase of my work and projects.
 
-🌐 **Live Portfolio:** [freeutka.is-a.dev](https://freeutka.is-a.dev)
+🌐 **Live Portfolio:** [freeutka.xyz](https://freeutka.xyz)
 
 ## Preview
 

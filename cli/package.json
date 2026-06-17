@@ -1,0 +1,22 @@
+{
+    "name": "freeutka",
+    "description": "Just a random backend developer",
+    "homepage": "https://freeutka.xyz",
+    "version": "1.0.0",
+    "author": "freeutka",
+    "bin": {
+        "freeutka": "./cli.js"
+    },
+    "scripts": {
+        "prepack": "bun ./generate.ts",
+        "dev": "bun --hot ./generate.ts"
+    },
+    "files": [
+        "cli.js"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/freeutka/website.git",
+        "directory": "cli"
+    }
+}
