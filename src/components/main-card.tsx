@@ -51,7 +51,7 @@ export const MainCard: React.FC = () => (
             lordpipon
           </h1>
           <p className="mt-1 text-sm text-text-secondary" itemProp="description">
-            Just a random backend developer
+            Idk just a dev i guess...
           </p>
 
           <nav

@@ -31,7 +31,7 @@ const content = `${gray("╭" + "─".repeat(WIDTH - 2) + "╮")}
 ${gray("│" + " ".repeat(WIDTH - 2) + "│")}
 ${center(bold("👨‍💻 lordpipon") + "  ")}
 ${gray("│" + " ".repeat(WIDTH - 2) + "│")}
-${center(lightGray("Just a random backend developer"))}
+${center(lightGray("Idk just a dev i guess..."))}
 ${center(
     link("website", WEBSITE_URL) +
     lightGray(" | ") +

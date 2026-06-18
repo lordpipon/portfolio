@@ -19,14 +19,14 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
       <link rel="canonical" href={`https://lordpipon.is-not-a.dev${canonical}`} />
       <meta name="generator" content="lordpipon React layout" />
       <title>{title}</title>
-      <meta name="description" content="Just a random backend developer" />
+      <meta name="description" content="Idk just a dev i guess..." />
       <meta name="keywords" content="lordpipon" />
       <meta name="author" content="lordpipon" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111" />
       <meta name="theme-color" content="#111111" />
       <meta name="color-scheme" content="dark" />
       <meta property="og:title" content="lordpipon" />
-      <meta property="og:description" content="Just a random backend developer" />
+      <meta property="og:description" content="Idk just a dev i guess..." />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://lordpipon.is-not-a.dev" />
       <meta property="og:image" content="https://lordpipon.is-not-a.dev/lordpipon.webp" />
@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
             "@type": "WebSite",
             name: "lordpipon",
             author: { "@type": "Person", name: "lordpipon" },
-            description: "Just a random backend developer.",
+            description: "Idk just a dev i guess...",
             logo: "https://lordpipon.is-not-a.dev/lordpipon.webp",
             url: "https://lordpipon.is-not-a.dev",
           }),
