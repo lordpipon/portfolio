@@ -1,22 +1,12 @@
-# Portfolio
+# My Portfolio
 
 Welcome to my portfolio website! This is a showcase of my work and projects.
 
-🌐 **Live Portfolio:** [freeutka.xyz](https://freeutka.xyz)
-
-## Preview
-
-![Portfolio Preview](./public/wPHA7W7iAQ.png)
+🌐 **Live Portfolio:** [lordpipon.is-not-a.dev](https://lordpipon.is-not-a.dev)
 
 ## About
 
 This is my personal portfolio built with modern web technologies. Feel free to explore my projects and get in touch!
-
-## Tech Stack
-
-* TypeScript
-* React
-* Tailwind CSS
 
 ## CLI
 
@@ -37,13 +27,13 @@ You can run it in two ways:
 * **Via curl:**
 
 ```bash
-curl freeutka.xyz
+curl lordpipon.is-not-a.dev
 ```
 
 * **Via npx:**
 
 ```bash
-npx freeutka
+npx lordpipon
 ```
 
 ## Cloudflare + Vercel setup
@@ -51,7 +41,7 @@ npx freeutka
 If you are hosting your site on **Vercel** behind **Cloudflare**, note that Vercel automatically redirects all HTTP requests to HTTPS. This breaks terminal usage such as:
 
 ```bash
-curl freeutka.xyz
+curl lordpipon.is-not-a.dev
 ```
 
 To support HTTP requests while keeping the website on HTTPS, you can use a **Cloudflare Worker** together with a **URL Rewrite Rule**.
@@ -77,7 +67,7 @@ export default {
       ua.includes("curl") &&
       url.pathname === "/cli.txt"
     ) {
-      return fetch("https://freeutka.xyz/cli.txt");
+      return fetch("https://lordpipon.is-not-a.dev/cli.txt");
     }
 
     return fetch(request);
@@ -123,13 +113,13 @@ without affecting regular browser traffic.
 Attach the Worker to:
 
 ```text
-freeutka.xyz/*
+lordpipon.is-not-a.dev/*
 ```
 
 Now:
 
 ```bash
-curl freeutka.xyz
+curl lordpipon.is-not-a.dev
 ```
 
 will work over HTTP, while regular browsers will still be redirected to HTTPS.
