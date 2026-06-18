@@ -77,15 +77,10 @@ export default {
       ua.includes("curl") &&
       url.pathname === "/cli.txt"
     ) {
-      return fetch(
-        "https://freeutka.xyz/cli.txt"
-      );
+      return fetch("https://freeutka.xyz/cli.txt");
     }
 
-    return Response.redirect(
-      `https://${url.hostname}${url.pathname}${url.search}`,
-      308
-    );
+    return fetch(request);
   }
 };
 ```
