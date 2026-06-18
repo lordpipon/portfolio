@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
       <meta property="og:description" content="Just a random backend developer" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://lordpipon.is-not-a.dev" />
-      <meta property="og:image" content="https://lordpipon.is-not-a.dev/9.webp" />
+      <meta property="og:image" content="https://lordpipon.is-not-a.dev/lordpipon.webp" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -39,7 +39,7 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
             name: "lordpipon",
             author: { "@type": "Person", name: "lordpipon" },
             description: "Just a random backend developer.",
-            logo: "https://lordpipon.is-not-a.dev/9.webp",
+            logo: "https://lordpipon.is-not-a.dev/lordpipon.webp",
             url: "https://lordpipon.is-not-a.dev",
           }),
         }}
