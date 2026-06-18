@@ -4,7 +4,7 @@
         "projects": [
             {
                 "name": "Dingoplay",
-                "icon": "/jexaddons.png",
+                "icon": "/android-chrome-192x192.png",
                 "links": [
                     {
                         "url": "https://dingoplay.dpdns.org",
@@ -21,7 +21,7 @@
         "projects": [
             {
                 "name": "Darkian Linux",
-                "icon": "/xactyl.png",
+                "icon": "/darkian_square.png",
                 "links": [
                     {
                         "url": "https://discord.gg/f97Ecduk9u",

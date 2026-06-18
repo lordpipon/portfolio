@@ -34,11 +34,11 @@ export const MainCard: React.FC = () => (
           className="h-24 w-24 shrink-0 overflow-hidden rounded-lg border border-border bg-placeholder"
           id="avatar-container"
         >
-          <source srcSet="/freeutka.png" type="image/png" />
+          <source srcSet="/9.webp" type="image/webp" />
           <img
             fetchPriority="high"
             itemProp="image"
-            src="/freeutka.png"
+            src="/9.webp"
             alt="pfp"
             height={96}
             width={96}
