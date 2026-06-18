@@ -1,9 +1,9 @@
 import React from "react";
 
 const links = [
-  { href: "https://github.com/freeutka", label: "github" },
-  { href: "https://discord.gg/KmcVss8Kdg", label: "discord" },
-  { href: "mailto:freeutka@proton.me", label: "email" },
+  { href: "https://github.com/lordpipon", label: "github" },
+  { label: "@piponidlo", plain: true },
+  { href: "mailto:lordpipon@gmail.com", label: "email" },
 ] as const;
 
 export const MainCard: React.FC = () => (
@@ -48,7 +48,7 @@ export const MainCard: React.FC = () => (
 
         <div className="min-w-0 flex-1 text-center sm:text-left">
           <h1 id="page-title" className="text-xl font-bold" itemProp="name">
-            freeutka
+            lordpipon
           </h1>
           <p className="mt-1 text-sm text-text-secondary" itemProp="description">
             Just a random backend developer
@@ -59,16 +59,20 @@ export const MainCard: React.FC = () => (
             aria-label="Social links"
           >
             {links.map((link, i) => (
-              <React.Fragment key={link.href}>
+              <React.Fragment key={link.href ?? link.label}>
                 {i > 0 && <span className="text-text-secondary/50 select-none">·</span>}
-                <a
-                  href={link.href}
-                  className="link-text"
-                  itemProp="sameAs"
-                  {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                >
-                  {link.label}
-                </a>
+                {"plain" in link && link.plain ? (
+                  <span className="link-text">{link.label}</span>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="link-text"
+                    itemProp="sameAs"
+                    {...(link.href!.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    {link.label}
+                  </a>
+                )}
               </React.Fragment>
             ))}
           </nav>

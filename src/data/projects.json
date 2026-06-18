@@ -3,58 +3,44 @@
         "title": "Favorite",
         "projects": [
             {
-                "name": "Jexaddons",
+                "name": "Dingoplay",
                 "icon": "/jexaddons.png",
                 "links": [
                     {
-                        "url": "https://jex.freeutka.xyz",
+                        "url": "https://dingoplay.dpdns.org",
                         "type": "website",
                         "primary": true
                     }
                 ],
-                "description": "Jexactyl Addons written by the community"
+                "description": "An fake gambling website"
             }
         ]
     },
     {
-        "title": "Management panel",
+        "title": "Operating System",
         "projects": [
             {
-                "name": "Xactyl",
+                "name": "Darkian Linux",
                 "icon": "/xactyl.png",
                 "links": [
                     {
-                        "url": "https://github.com/freeutka/Xactyl",
-                        "type": "github",
-                        "primary": true
-                    },
-                    {
-                        "type": "discord-bot-invite",
-                        "url": "https://discord.gg/6fcpK85yYu"
-                    },
-                    {
-                        "url": "https://freeutka.github.io/Xactyl-docs/",
-                        "type": "website"
+                        "url": "https://discord.gg/f97Ecduk9u",
+                        "type": "discord-bot-invite"
                     }
                 ],
-                "description": "Xactyl is customized fork of Pterodactyl"
-            }
-        ]
-    },
-    {
-        "title": "Web Apps",
-        "projects": [
+                "description": "An operating system."
+            },
             {
-                "name": "DuckCDN",
-                "icon": "/github.png",
+                "name": "HorizonOS",
+                "icon": "/horizonos.png",
                 "links": [
                     {
-                        "url": "https://github.com/freeutka/DuckCDN",
-                        "type": "github",
+                        "url": "https://horizonos.dpdns.org",
+                        "type": "website",
                         "primary": true
                     }
                 ],
-                "description": "A simple and minimalistic image CDN built with PHP"
+                "description": "An OS to look like macOS."
             }
         ]
     }

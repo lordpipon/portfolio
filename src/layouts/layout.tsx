@@ -8,7 +8,7 @@ export type LayoutProps = {
   children: React.ReactNode;
 };
 
-const siteTitle = "freeutka";
+const siteTitle = "lordpipon";
 const commit = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "dev";
 
 const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", children }) => (
@@ -16,38 +16,38 @@ const Layout: React.FC<LayoutProps> = ({ title = siteTitle, canonical = "/", chi
     <head>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width" />
-      <link rel="canonical" href={`https://freeutka.xyz${canonical}`} />
-      <meta name="generator" content="freeutka React layout" />
+      <link rel="canonical" href={`https://lordpipon.is-not-a.dev${canonical}`} />
+      <meta name="generator" content="lordpipon React layout" />
       <title>{title}</title>
       <meta name="description" content="Just a random backend developer" />
-      <meta name="keywords" content="freeutka,EmailThing" />
-      <meta name="author" content="freeutka" />
+      <meta name="keywords" content="lordpipon" />
+      <meta name="author" content="lordpipon" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111" />
       <meta name="theme-color" content="#111111" />
       <meta name="color-scheme" content="dark" />
-      <meta property="og:title" content="freeutka" />
+      <meta property="og:title" content="lordpipon" />
       <meta property="og:description" content="Just a random backend developer" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://freeutka.xyz" />
-      <meta property="og:image" content="https://freeutka.xyz/freeutka.png" />
+      <meta property="og:url" content="https://lordpipon.is-not-a.dev" />
+      <meta property="og:image" content="https://lordpipon.is-not-a.dev/freeutka.png" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            name: "freeutka",
-            author: { "@type": "Person", name: "freeutka" },
+            name: "lordpipon",
+            author: { "@type": "Person", name: "lordpipon" },
             description: "Just a random backend developer.",
-            logo: "https://freeutka.xyz/freeutka.png",
-            url: "https://freeutka.xyz",
+            logo: "https://lordpipon.is-not-a.dev/freeutka.png",
+            url: "https://lordpipon.is-not-a.dev",
           }),
         }}
       />
       <style id="tailwind-styles">/*tailwind*/</style>
     </head>
     <div className="fixed bottom-2 right-4 text-xs text-text-secondary/60">
-      <a href={`https://github.com/freeutka/website/commit/${commit}`} className="underline hover:no-underline" title="Commit">
+      <a href={`https://github.com/lordpipon/portfolio/commit/${commit}`} className="underline hover:no-underline" title="Commit">
         {commit}
       </a>
     </div>

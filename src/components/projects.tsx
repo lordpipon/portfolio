@@ -25,7 +25,7 @@ export default function Projects() {
 
       <p className="pt-2 text-center">
         <a
-          href="https://github.com/freeutka"
+          href="https://github.com/lordpipon"
           target="_blank"
           rel="noopener noreferrer"
           className="muted-link hover:underline"
