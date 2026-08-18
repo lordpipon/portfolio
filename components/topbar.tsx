@@ -80,7 +80,7 @@ export function Topbar() {
           whileTap={{ scale: 0.97 }}
         >
           lordpipon
-          <span className="text-xs font-semibold tracking-tight text-muted-foreground">portfolio</span>
+          <span className="text-sm font-semibold tracking-tight">portfolio</span>
         </motion.a>
 
         <div className="hidden items-center gap-1 sm:flex">

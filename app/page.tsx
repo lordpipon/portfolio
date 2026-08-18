@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import Image from "next/image";
 import { Topbar } from "@/components/topbar";
 
 function smoothScrollTo(href: string) {
@@ -166,27 +167,34 @@ export default function Home() {
             style={{ opacity: heroOpacity, y: heroY }}
             className="flex flex-col"
           >
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-sm text-muted-foreground"
-            >
-              lordpipon
-            </motion.p>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6, ease: "easeOut" }}
-              className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl"
-            >
-              Hi, i am{" "}
-              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                lordpipon
-              </span>
-              .
-            </motion.h1>
+            <div className="flex items-center gap-5">
+              <motion.div
+                initial={{ scale: 0, opacity: 0, rotate: -180 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                transition={{ duration: 0.7, ease: "backOut" }}
+              >
+                <Image
+                  src="/pfp.png"
+                  alt="lordpipon"
+                  width={80}
+                  height={80}
+                  priority
+                  className="size-20 rounded-full object-cover ring-2 ring-border"
+                />
+              </motion.div>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.6, ease: "easeOut" }}
+                className="text-4xl font-bold tracking-tight sm:text-5xl"
+              >
+                Hi, i am{" "}
+                <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                  lordpipon
+                </span>
+                .
+              </motion.h1>
+            </div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
