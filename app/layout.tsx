@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio of lordpipon — Minecraft server owner, Linux tinkerer and builder of small things.",
+  icons: {
+    icon: "/pfp.png",
+  },
 };
 
 export default function RootLayout({

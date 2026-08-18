@@ -1,14 +1,18 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight, Cloud, Github, Mail, MessageCircle, Music2, Youtube } from "lucide-react";
+"use client";
 
-import { Separator } from "@/components/ui/separator";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "framer-motion";
+import {
+  Cloud,
+  Github,
+  Mail,
+  MessageCircle,
+  Music2,
+  Youtube,
+} from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Portfolio",
-};
+import { Topbar } from "@/components/topbar";
+import { TypewriterHero } from "@/components/typewriter-hero";
+import { ProjectCard, MinecraftCard } from "@/components/project-card";
 
 const socials = [
   {
@@ -25,8 +29,14 @@ const socials = [
   },
   {
     name: "TikTok",
-    handle: "@piponidlo",
-    href: "https://www.tiktok.com/@piponidlo",
+    handle: "@lordpipon",
+    href: "https://www.tiktok.com/@lordpipon",
+    icon: Music2,
+  },
+  {
+    name: "TikTok",
+    handle: "@thinkpad.sh",
+    href: "https://www.tiktok.com/@thinkpad.sh",
     icon: Music2,
   },
   {
@@ -49,119 +59,143 @@ const socials = [
   },
 ];
 
-const projects = [
-  {
-    year: "2023",
-    items: [{ label: "Minecraft server — pipoooonio" }],
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
   },
-  {
-    year: "2024",
-    items: [{ label: "Minecraft server — minefishing" }],
-  },
-  {
-    year: "2025",
-    items: [{ label: "Minecraft servers — ForgeSMP, SentinelSMP" }],
-  },
-  {
-    year: "2026",
-    items: [
-      { label: "Minecraft servers — FishieSMP, PrismPractice" },
-      {
-        label: "Darkian Linux, Darkian “the company”, DarkianSearch, Aetherlyn Hosting",
-      },
-      {
-        label: "Server Sway Dotfiles",
-        href: "https://github.com/lordpipon/server-swaydots",
-      },
-      {
-        label: "Prebuilt OpenCore EFI files for ThinkPad E14 Gen 3",
-        href: "https://github.com/lordpipon/thinkpad-e14-gen3-opencore-efifiles",
-      },
-    ],
-  },
-];
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
+};
 
 export default function Home() {
   return (
-    <main className="relative mx-auto w-full max-w-xl px-4 py-20 sm:px-6">
-      <div className="absolute top-4 right-0 sm:top-6 sm:right-2">
-        <ThemeToggle />
-      </div>
+    <>
+      <Topbar />
 
-      <section className="flex flex-col items-center pt-8 text-center">
-        <Image
-          src="/pfp.png"
-          alt="lordpipon"
-          width={112}
-          height={112}
-          priority
-          className="size-28 rounded-full object-cover ring-1 ring-border"
-        />
-        <h1 className="mt-6 text-3xl font-bold tracking-tight">lordpipon</h1>
+      <main className="mx-auto w-full max-w-xl px-4 pt-24 pb-20 sm:px-6">
+        {/* Hero */}
+        <section id="hero" className="flex flex-col items-center pt-8">
+          <TypewriterHero />
+        </section>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-          {socials.map((social) => {
-            const external = social.href.startsWith("http");
-            return (
-              <a
-                key={social.name}
-                href={social.href}
-                title={social.name}
-                className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground"
-                {...(external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
-                <social.icon className="size-4" />
-                {social.handle}
-              </a>
-            );
-          })}
-        </div>
-      </section>
+        {/* Socials */}
+        <section id="socials" className="mt-16">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center text-sm font-semibold tracking-widest text-muted-foreground uppercase"
+          >
+            Socials
+          </motion.h2>
 
-      <Separator className="my-12" />
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="mt-6 flex flex-wrap items-center justify-center gap-2"
+          >
+            {socials.map((social) => {
+              const external = social.href.startsWith("http");
+              return (
+                <motion.a
+                  key={`${social.name}-${social.handle}`}
+                  variants={item}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  href={social.href}
+                  title={social.name}
+                  className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground"
+                  {...(external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  <social.icon className="size-4" />
+                  {social.handle}
+                </motion.a>
+              );
+            })}
+          </motion.div>
+        </section>
 
-      <section>
-        <h2 className="text-sm font-semibold tracking-widest text-muted-foreground uppercase">
-          My Projects
-        </h2>
-        <div className="mt-6 space-y-0">
-          {projects.map((group) => (
-            <div key={`${group.year}-${group.items[0].label}`}>
-              <Separator />
-              <div className="flex gap-6 py-5">
-                <div className="w-12 shrink-0 text-sm font-medium text-muted-foreground tabular-nums">
-                  {group.year}
-                </div>
-                <div className="space-y-2">
-                  {group.items.map((item) =>
-                    item.href ? (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-start gap-1 text-sm hover:text-foreground"
-                      >
-                        <span className="underline decoration-muted-foreground/40 underline-offset-4 transition-colors group-hover:decoration-foreground">
-                          {item.label}
-                        </span>
-                        <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
-                      </Link>
-                    ) : (
-                      <p key={item.label} className="text-sm">
-                        {item.label}
-                      </p>
-                    ),
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-          <Separator />
-        </div>
-      </section>
-    </main>
+        {/* Projects */}
+        <section id="projects" className="mt-16">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center text-sm font-semibold tracking-widest text-muted-foreground uppercase"
+          >
+            Projects
+          </motion.h2>
+
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            className="mt-6 grid gap-3"
+          >
+            <motion.div variants={item}>
+              <ProjectCard
+                title="Server Sway Dotfiles"
+                description="My personal Sway window manager configuration and dotfiles for a minimal, tiling-based Linux setup."
+                href="https://github.com/lordpipon/server-swaydots"
+                liveHref="https://lordpipon.github.io/serverswaydots/"
+                tags={["Sway", "Linux", "Dotfiles"]}
+              />
+            </motion.div>
+
+            <motion.div variants={item}>
+              <ProjectCard
+                title="Dingoplay"
+                description="A project by lordpipon."
+                href="https://github.com/lordpipon/dingoplay"
+                tags={["Project"]}
+              />
+            </motion.div>
+
+            <motion.div variants={item}>
+              <ProjectCard
+                title="Darkian Linux"
+                description="An organization for Darkian Linux and related projects."
+                href="https://github.com/Darkian-Linux/"
+                tags={["Linux", "Organization"]}
+              />
+            </motion.div>
+
+            <motion.div variants={item}>
+              <ProjectCard
+                title="Darkian Search"
+                description="A search engine by Darkian Linux."
+                href="https://github.com/Darkian-Linux/DarkianSearch"
+                liveHref="https://search.darkian.xyz"
+                tags={["Search", "Web"]}
+              />
+            </motion.div>
+
+            <motion.div variants={item}>
+              <MinecraftCard />
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* Footer */}
+        <motion.footer
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-20 border-t border-border/50 pt-8 text-center text-xs text-muted-foreground"
+        >
+          built by lordpipon
+        </motion.footer>
+      </main>
+    </>
   );
 }
