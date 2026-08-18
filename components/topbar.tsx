@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -11,6 +11,14 @@ const navLinks = [
   { label: "Socials", href: "#socials" },
   { label: "Projects", href: "#projects" },
 ];
+
+function smoothScrollTo(href: string) {
+  const id = href.replace("#", "");
+  const el = document.getElementById(id);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - 72;
+  window.scrollTo({ top: y, behavior: "smooth" });
+}
 
 export function Topbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -41,6 +49,14 @@ export function Topbar() {
     return () => observer.disconnect();
   }, []);
 
+  const handleNav = useCallback(
+    (href: string) => {
+      setActive(href);
+      smoothScrollTo(href);
+    },
+    []
+  );
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -48,19 +64,23 @@ export function Topbar() {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-border/50 bg-background/80 backdrop-blur-xl"
+          ? "border-b border-border/50 bg-background/80 backdrop-blur-xl shadow-sm shadow-black/5"
           : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex h-14 max-w-2xl items-center justify-between px-5 sm:px-8">
         <motion.a
           href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav("#home");
+          }}
           className="flex items-baseline gap-1.5 text-sm font-semibold tracking-tight"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
           lordpipon
-          <span className="text-xs font-normal text-muted-foreground">portfolio</span>
+          <span className="text-xs font-semibold tracking-tight text-muted-foreground">portfolio</span>
         </motion.a>
 
         <div className="hidden items-center gap-1 sm:flex">
@@ -68,6 +88,10 @@ export function Topbar() {
             <a
               key={link.label}
               href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav(link.href);
+              }}
               className="relative rounded-lg px-3 py-1.5 text-sm transition-colors"
             >
               {active === link.href && (
@@ -138,7 +162,11 @@ export function Topbar() {
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMobileOpen(false);
+                    handleNav(link.href);
+                  }}
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: i * 0.05 }}

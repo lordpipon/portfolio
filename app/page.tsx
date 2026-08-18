@@ -19,6 +19,14 @@ import Link from "next/link";
 
 import { Topbar } from "@/components/topbar";
 
+function smoothScrollTo(href: string) {
+  const id = href.replace("#", "");
+  const el = document.getElementById(id);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - 72;
+  window.scrollTo({ top: y, behavior: "smooth" });
+}
+
 const socials = [
   {
     name: "Discord",
@@ -198,6 +206,10 @@ export default function Home() {
             >
               <motion.a
                 href="#projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  smoothScrollTo("#projects");
+                }}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"

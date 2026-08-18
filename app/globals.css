@@ -119,9 +119,70 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Grain overlay */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+.dark .grain::before {
+  opacity: 0.04;
+}
+
+/* Background gradient blobs */
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-blobs::before,
+.bg-blobs::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+}
+
+.bg-blobs::before {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -150px;
+  background: oklch(0.6 0.245 262.881);
+  animation: blob-drift 20s ease-in-out infinite alternate;
+}
+
+.bg-blobs::after {
+  width: 500px;
+  height: 500px;
+  bottom: -150px;
+  left: -100px;
+  background: oklch(0.6 0.118 184.704);
+  animation: blob-drift 25s ease-in-out infinite alternate-reverse;
+}
+
+.dark .bg-blobs::before,
+.dark .bg-blobs::after {
+  opacity: 0.08;
 }
 
 @layer utilities {
@@ -191,5 +252,20 @@
   }
   50% {
     opacity: 0;
+  }
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  100% {
+    transform: translate(10px, -10px) scale(1.02);
   }
 }

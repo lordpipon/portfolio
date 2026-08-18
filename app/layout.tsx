@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | lordpipon",
   },
   description:
-    "Portfolio of lordpipon — Minecraft server owner, Linux tinkerer and builder of small things.",
+    "A minecraft server developer, linux user and a developer.",
   icons: {
     icon: "/pfp.png",
   },
@@ -38,6 +38,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <div className="bg-blobs" />
+          <div className="grain" />
           {children}
         </ThemeProvider>
       </body>
