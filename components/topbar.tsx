@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
-  { label: "Home", href: "#hero" },
+  { label: "Home", href: "#home" },
   { label: "Socials", href: "#socials" },
   { label: "Projects", href: "#projects" },
 ];
@@ -15,11 +15,30 @@ const navLinks = [
 export function Topbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState("#home");
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 20);
+  });
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const sections = navLinks.map((l) => l.href.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(`#${entry.target.id}`);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -33,22 +52,45 @@ export function Topbar() {
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-14 max-w-xl items-center justify-between px-4 sm:px-6">
-        <a href="#hero" className="text-sm font-semibold tracking-tight">
+      <nav className="mx-auto flex h-14 max-w-2xl items-center justify-between px-5 sm:px-8">
+        <motion.a
+          href="#home"
+          className="flex items-baseline gap-1.5 text-sm font-semibold tracking-tight"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+        >
           lordpipon
-        </a>
+          <span className="text-xs font-normal text-muted-foreground">portfolio</span>
+        </motion.a>
 
-        <div className="hidden items-center gap-6 sm:flex">
+        <div className="hidden items-center gap-1 sm:flex">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="relative rounded-lg px-3 py-1.5 text-sm transition-colors"
             >
-              {link.label}
+              {active === link.href && (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute inset-0 rounded-lg bg-muted"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span
+                className={`relative z-10 ${
+                  active === link.href
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+              </span>
             </a>
           ))}
-          <ThemeToggle />
+          <div className="ml-2">
+            <ThemeToggle />
+          </div>
         </div>
 
         <button
@@ -56,11 +98,29 @@ export function Topbar() {
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
-          {mobileOpen ? (
-            <X className="size-5 text-muted-foreground" />
-          ) : (
-            <Menu className="size-5 text-muted-foreground" />
-          )}
+          <AnimatePresence mode="wait">
+            {mobileOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <X className="size-5 text-muted-foreground" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <Menu className="size-5 text-muted-foreground" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </nav>
 
@@ -70,19 +130,26 @@ export function Topbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden border-t border-border/50 bg-background/90 backdrop-blur-xl sm:hidden"
           >
             <div className="flex flex-col gap-1 px-4 py-3">
-              {navLinks.map((link) => (
-                <a
+              {navLinks.map((link, i) => (
+                <motion.a
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className={`rounded-lg px-3 py-2 text-sm transition-colors ${
+                    active === link.href
+                      ? "bg-muted text-foreground font-medium"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
               <div className="px-3 py-2">
                 <ThemeToggle />

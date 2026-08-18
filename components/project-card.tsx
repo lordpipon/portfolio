@@ -9,6 +9,7 @@ export interface ProjectCardProps {
   description?: string;
   href?: string;
   liveHref?: string;
+  liveLabel?: string;
   tags?: string[];
   children?: React.ReactNode;
 }
@@ -18,16 +19,24 @@ export function ProjectCard({
   description,
   href,
   liveHref,
+  liveLabel = "Live",
   tags,
   children,
 }: ProjectCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      whileHover={{ y: -4, scale: 1.015 }}
+      className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
     >
-      <div className="flex items-start justify-between gap-3">
+      <motion.div
+        className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+        layoutId="card-glow"
+      />
+      <div className="relative flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <h3 className="text-base font-semibold tracking-tight">{title}</h3>
           {description && (
@@ -36,44 +45,52 @@ export function ProjectCard({
             </p>
           )}
         </div>
-        <div className="flex shrink-0 gap-1.5">
+        <div className="relative flex shrink-0 gap-1.5">
           {href && (
-            <Link
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-lg border border-border/60 bg-muted/50 px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
-            >
-              <ArrowUpRight className="size-3.5" />
-              Code
-            </Link>
+            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-lg border border-border/60 bg-muted/50 px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
+              >
+                <ArrowUpRight className="size-3.5" />
+                Code
+              </Link>
+            </motion.div>
           )}
           {liveHref && (
-            <Link
-              href={liveHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-lg border border-border/60 bg-muted/50 px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
-            >
-              <ExternalLink className="size-3.5" />
-              Live
-            </Link>
+            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href={liveHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-lg border border-border/60 bg-muted/50 px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
+              >
+                <ExternalLink className="size-3.5" />
+                {liveLabel}
+              </Link>
+            </motion.div>
           )}
         </div>
       </div>
       {tags && tags.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {tags.map((tag) => (
-            <span
+        <div className="relative mt-3 flex flex-wrap gap-1.5">
+          {tags.map((tag, i) => (
+            <motion.span
               key={tag}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05, duration: 0.3 }}
               className="inline-block rounded-md bg-muted/80 px-2 py-0.5 text-xs text-muted-foreground"
             >
               {tag}
-            </span>
+            </motion.span>
           ))}
         </div>
       )}
-      {children && <div className="mt-3">{children}</div>}
+      {children && <div className="relative mt-3">{children}</div>}
     </motion.div>
   );
 }
@@ -88,11 +105,15 @@ export function MinecraftCard() {
 
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      whileHover={{ y: -4, scale: 1.015 }}
+      className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
     >
-      <div>
+      <motion.div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+      <div className="relative">
         <h3 className="text-base font-semibold tracking-tight">
           Minecraft Servers
         </h3>
@@ -101,9 +122,16 @@ export function MinecraftCard() {
         </p>
       </div>
 
-      <div className="mt-4 space-y-2">
-        {timeline.map((entry) => (
-          <div key={entry.year} className="flex items-center gap-3">
+      <div className="relative mt-4 space-y-2">
+        {timeline.map((entry, gi) => (
+          <motion.div
+            key={entry.year}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: gi * 0.1, duration: 0.4 }}
+            className="flex items-center gap-3"
+          >
             <span className="w-10 shrink-0 text-xs font-medium tabular-nums text-muted-foreground">
               {entry.year}
             </span>
@@ -117,21 +145,31 @@ export function MinecraftCard() {
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
-        <div className="flex items-center gap-3 pt-1">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: timeline.length * 0.1, duration: 0.4 }}
+          className="flex items-center gap-3 pt-1"
+        >
           <span className="w-10 shrink-0 text-xs font-medium tabular-nums text-muted-foreground">
             Soon
           </span>
           <div className="flex flex-wrap gap-1.5">
-            <span className="inline-block rounded-md border border-dashed border-primary/30 bg-primary/5 px-2 py-0.5 text-xs text-primary">
+            <motion.span
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-block rounded-md border border-dashed border-primary/30 bg-primary/5 px-2 py-0.5 text-xs text-primary"
+            >
               PrismPractice V2
-            </span>
+            </motion.span>
             <span className="inline-block rounded-md border border-dashed border-muted-foreground/20 bg-muted/50 px-2 py-0.5 text-xs text-muted-foreground">
               ???
             </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

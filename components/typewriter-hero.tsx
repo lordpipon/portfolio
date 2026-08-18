@@ -25,9 +25,9 @@ export function TypewriterHero() {
   return (
     <div className="flex flex-col items-center text-center">
       <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "backOut" }}
+        initial={{ scale: 0, opacity: 0, rotate: -180 }}
+        animate={{ scale: 1, opacity: 1, rotate: 0 }}
+        transition={{ duration: 0.7, ease: "backOut" }}
       >
         <Image
           src="/pfp.png"
@@ -40,9 +40,9 @@ export function TypewriterHero() {
       </motion.div>
 
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
+        transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
         className="mt-8 text-3xl font-bold tracking-tight sm:text-4xl"
       >
         <Typewriter text={FULL_TEXT} onComplete={() => setGreetingDone(true)} />
@@ -57,12 +57,12 @@ export function TypewriterHero() {
       </motion.h1>
 
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: nameDone ? 1 : 0 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: nameDone ? 1 : 0, y: nameDone ? 0 : 10 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground"
       >
-        Minecraft server owner, Linux tinkerer and builder of small things.
+        A minecraft server developer, linux user and a developer.
       </motion.p>
     </div>
   );
