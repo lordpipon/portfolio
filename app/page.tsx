@@ -88,13 +88,23 @@ const projects = [
   {
     num: "02",
     title: "Dingoplay",
-    description: "A project by lordpipon.",
+    description: "A fork of outpoot/rugplay. Dingoplay is the older one.",
     tags: ["Project"],
     href: "https://github.com/lordpipon/dingoplay",
     icon: Gamepad2,
   },
   {
     num: "03",
+    title: "Catplay",
+    description:
+      "The newest and latest version. A fork of outpoot/rugplay.",
+    tags: ["Project"],
+    href: "https://github.com/lordpipon/catplay",
+    liveHref: "https://catplay.org",
+    icon: Gamepad2,
+  },
+  {
+    num: "04",
     title: "Darkian Linux",
     description:
       "An organization for Darkian Linux and related projects.",
@@ -104,7 +114,7 @@ const projects = [
     icon: Globe,
   },
   {
-    num: "04",
+    num: "05",
     title: "Darkian Search",
     description: "A search engine by Darkian Linux.",
     tags: ["Search", "Web"],
