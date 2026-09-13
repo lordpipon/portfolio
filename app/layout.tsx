@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { CustomCursor } from "@/components/custom-cursor";
 
 import "./globals.css";
 
@@ -40,6 +41,7 @@ export default function RootLayout({
         >
           <div className="bg-blobs" />
           <div className="grain" />
+          <CustomCursor />
           {children}
         </ThemeProvider>
       </body>

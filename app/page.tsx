@@ -13,6 +13,7 @@ import {
   Server,
   Globe,
   Search,
+  Terminal,
   Gamepad2,
 } from "lucide-react";
 import Link from "next/link";
@@ -87,14 +88,6 @@ const projects = [
   },
   {
     num: "02",
-    title: "Dingoplay",
-    description: "A fork of outpoot/rugplay. Dingoplay is the older one.",
-    tags: ["Project"],
-    href: "https://github.com/lordpipon/dingoplay",
-    icon: Gamepad2,
-  },
-  {
-    num: "03",
     title: "Catplay",
     description:
       "The newest and latest version. A fork of outpoot/rugplay.",
@@ -102,6 +95,15 @@ const projects = [
     href: "https://github.com/lordpipon/catplay",
     liveHref: "https://catplay.org",
     icon: Gamepad2,
+  },
+  {
+    num: "03",
+    title: "GoDucky",
+    description: "A project by lordpipon.",
+    tags: ["CLI", "Tool"],
+    href: "https://github.com/go-ducky/cli",
+    liveHref: "https://goducky.lordpipon.com",
+    icon: Terminal,
   },
   {
     num: "04",
@@ -392,7 +394,7 @@ export default function Home() {
             >
               <div className="flex items-center gap-6">
                 <span className="w-12 shrink-0 text-sm font-medium tabular-nums text-muted-foreground">
-                  Soon
+                  Now
                 </span>
                 <div className="flex flex-wrap gap-2">
                   <motion.span
@@ -402,12 +404,15 @@ export default function Home() {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="rounded-full border border-dashed border-primary/30 bg-primary/5 px-3 py-1 text-sm text-primary"
+                    className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm text-primary"
                   >
-                    PrismPractice V2
+                    Current Running PrismPractice
                   </motion.span>
-                  <span className="rounded-full border border-dashed border-muted-foreground/20 bg-muted/50 px-3 py-1 text-sm text-muted-foreground">
-                    ???
+                  <span className="rounded-full bg-muted/80 px-3 py-1 text-sm text-muted-foreground">
+                    IP: prismpractice.eu
+                  </span>
+                  <span className="rounded-full bg-muted/80 px-3 py-1 text-sm text-muted-foreground">
+                    1.21 - 26.2
                   </span>
                 </div>
               </div>

@@ -127,6 +127,21 @@
   }
 }
 
+/* Hide native cursor when custom cursor is active on fine pointers */
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  [role="button"] {
+    cursor: none;
+  }
+}
+
 /* Grain overlay */
 .grain::before {
   content: "";

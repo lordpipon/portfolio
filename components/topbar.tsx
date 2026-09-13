@@ -83,7 +83,7 @@ export function Topbar() {
           <span className="text-sm font-semibold tracking-tight">portfolio</span>
         </motion.a>
 
-        <div className="hidden items-center gap-1 sm:flex">
+        <div className="hidden items-center gap-2 sm:flex">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -92,24 +92,20 @@ export function Topbar() {
                 e.preventDefault();
                 handleNav(link.href);
               }}
-              className="relative rounded-lg px-3 py-1.5 text-sm transition-colors"
+              className={`relative rounded-full border px-4 py-1.5 text-sm transition-all duration-300 ${
+                active === link.href
+                  ? "border-foreground/25 bg-muted text-foreground"
+                  : "border-transparent text-muted-foreground hover:border-foreground/15 hover:bg-muted/60 hover:text-foreground"
+              }`}
             >
               {active === link.href && (
                 <motion.span
-                  layoutId="nav-active"
-                  className="absolute inset-0 rounded-lg bg-muted"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  layoutId="nav-pill"
+                  className="absolute inset-0 -z-10 rounded-full bg-muted"
+                  transition={{ type: "spring", stiffness: 300, damping: 28 }}
                 />
               )}
-              <span
-                className={`relative z-10 ${
-                  active === link.href
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {link.label}
-              </span>
+              <span className="relative z-10">{link.label}</span>
             </a>
           ))}
           <div className="ml-2">
