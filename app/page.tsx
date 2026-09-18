@@ -15,6 +15,7 @@ import {
   Search,
   Terminal,
   Gamepad2,
+  Code2,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -123,6 +124,15 @@ const projects = [
     href: "https://github.com/Darkian-Linux/DarkianSearch",
     liveHref: "https://search.darkian.xyz",
     icon: Search,
+  },
+  {
+    num: "06",
+    title: "Codify",
+    description: "My own minimal & fast IDE.",
+    tags: ["IDE", "Tool"],
+    href: "https://github.com/lordpipon/codify",
+    liveHref: "https://codify.lordpipon.com",
+    icon: Code2,
   },
 ];
 
