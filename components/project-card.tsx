@@ -100,7 +100,7 @@ export function MinecraftCard() {
     { year: "2023", servers: ["Pipoooonio"] },
     { year: "2024", servers: ["Minefishing"] },
     { year: "2025", servers: ["ForgeSMP", "SentinelSMP"] },
-    { year: "2026", servers: ["FishieSMP", "PrismPractice"] },
+    { year: "2026", servers: ["FishieSMP", "PrismPractice", "LushVanilla"] },
   ];
 
   return (

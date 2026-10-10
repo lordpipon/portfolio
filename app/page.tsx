@@ -15,7 +15,6 @@ import {
   Search,
   Terminal,
   Gamepad2,
-  Code2,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -66,6 +65,18 @@ const socials = [
     handle: "@lordpipon",
     href: "https://github.com/lordpipon",
     icon: Github,
+  },
+  {
+    name: "Steam",
+    handle: "@lordpipon",
+    href: "https://steamcommunity.com/id/lordpipon/",
+    icon: Gamepad2,
+  },
+  {
+    name: "JobIndustries",
+    handle: "@jobindustries",
+    href: "https://steamcommunity.com/id/jobindustries/",
+    icon: Gamepad2,
   },
   {
     name: "Email",
@@ -125,22 +136,13 @@ const projects = [
     liveHref: "https://search.darkian.xyz",
     icon: Search,
   },
-  {
-    num: "06",
-    title: "Codify",
-    description: "My own minimal & fast IDE.",
-    tags: ["IDE", "Tool"],
-    href: "https://github.com/lordpipon/codify",
-    liveHref: "https://codify.lordpipon.com",
-    icon: Code2,
-  },
 ];
 
 const minecraftTimeline = [
   { year: "2023", servers: ["Pipoooonio"] },
   { year: "2024", servers: ["Minefishing"] },
   { year: "2025", servers: ["ForgeSMP", "SentinelSMP"] },
-  { year: "2026", servers: ["FishieSMP", "PrismPractice"] },
+  { year: "2026", servers: ["FishieSMP", "PrismPractice", "LushVanilla"] },
 ];
 
 const fadeUp = {
@@ -394,39 +396,6 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={slideRight}
-              custom={minecraftTimeline.length}
-              className="border-b border-border/40 py-4 last:border-b-0"
-            >
-              <div className="flex items-center gap-6">
-                <span className="w-12 shrink-0 text-sm font-medium tabular-nums text-muted-foreground">
-                  Now
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  <motion.span
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm text-primary"
-                  >
-                    Current Running PrismPractice
-                  </motion.span>
-                  <span className="rounded-full bg-muted/80 px-3 py-1 text-sm text-muted-foreground">
-                    IP: prismpractice.eu
-                  </span>
-                  <span className="rounded-full bg-muted/80 px-3 py-1 text-sm text-muted-foreground">
-                    1.21 - 26.2
-                  </span>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </motion.section>
 
