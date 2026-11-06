@@ -37,6 +37,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <div className="ambient-background" aria-hidden="true">
+            <div className="ambient-grid" />
+            <div className="ambient-glow ambient-glow-one" />
+            <div className="ambient-glow ambient-glow-two" />
+          </div>
           {children}
         </ThemeProvider>
       </body>
