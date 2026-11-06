@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
+  Asterisk,
   Cloud,
   Github,
   Mail,
@@ -10,24 +10,18 @@ import {
   Music2,
   Youtube,
   ArrowUpRight,
+  ArrowDown,
+  ArrowUp,
   Server,
   Globe,
   Search,
   Terminal,
   Gamepad2,
+  Code2,
 } from "lucide-react";
-import Link from "next/link";
-
 import Image from "next/image";
 import { Topbar } from "@/components/topbar";
-
-function smoothScrollTo(href: string) {
-  const id = href.replace("#", "");
-  const el = document.getElementById(id);
-  if (!el) return;
-  const y = el.getBoundingClientRect().top + window.scrollY - 72;
-  window.scrollTo({ top: y, behavior: "smooth" });
-}
+import { Button } from "@/components/ui/button";
 
 const socials = [
   {
@@ -101,8 +95,7 @@ const projects = [
   {
     num: "02",
     title: "Catplay",
-    description:
-      "The newest and latest version. A fork of outpoot/rugplay.",
+    description: "The newest and latest version. A fork of outpoot/rugplay.",
     tags: ["Project"],
     href: "https://github.com/lordpipon/catplay",
     liveHref: "https://catplay.org",
@@ -120,8 +113,7 @@ const projects = [
   {
     num: "04",
     title: "Darkian Linux",
-    description:
-      "An organization for Darkian Linux and related projects.",
+    description: "An organization for Darkian Linux and related projects.",
     tags: ["Linux", "Organization"],
     href: "https://github.com/Darkian-Linux/",
     liveHref: "https://darkian.xyz",
@@ -145,405 +137,301 @@ const minecraftTimeline = [
   { year: "2026", servers: ["FishieSMP", "PrismPractice", "LushVanilla"] },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const },
-  }),
-};
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
-  },
-};
-
-const slideRight = {
-  hidden: { opacity: 0, x: -40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const },
-  }),
-};
-
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const reducedMotion = useReducedMotion();
+  const reveal = {
+    initial: reducedMotion ? (false as const) : { opacity: 0, y: 18 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.1 },
+    transition: { duration: 0.45, ease: "easeOut" as const },
+  };
 
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Topbar />
-
-      <main className="mx-auto w-full max-w-2xl px-5 pt-28 pb-24 sm:px-8">
-        {/* Hero */}
-        <section id="home" ref={heroRef}>
+      <main id="main" className="portfolio-shell">
+        <section id="home" className="hero">
           <motion.div
-            style={{ opacity: heroOpacity, y: heroY }}
-            className="flex flex-col"
+            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65 }}
           >
-            <div className="flex items-center gap-5">
-              <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: -180 }}
-                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                transition={{ duration: 0.7, ease: "backOut" }}
-              >
+            <div className="eyebrow">
+              <span className="status-dot" /> A LITTLE CORNER OF THE INTERNET
+            </div>
+            <div className="hero-heading">
+              <h1>
+                Hey, I’m
+                <br />
+                <span>lordpipon</span>
+                <span className="hero-period">.</span>
+              </h1>
+              <div className="avatar-frame">
                 <Image
                   src="/pfp.png"
-                  alt="lordpipon"
-                  width={80}
-                  height={80}
+                  alt="lordpipon's avatar"
+                  width={128}
+                  height={128}
                   priority
-                  className="size-20 rounded-full object-cover ring-2 ring-border"
                 />
-              </motion.div>
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.6, ease: "easeOut" }}
-                className="text-4xl font-bold tracking-tight sm:text-5xl"
-              >
-                Hi, i am{" "}
-                <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  lordpipon
+                <span className="avatar-label">
+                  <Terminal size={13} /> hello, world
                 </span>
-                .
-              </motion.h1>
+              </div>
             </div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55, duration: 0.5 }}
-              className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground"
-            >
-              A minecraft server developer, linux user and a developer.
-              Building things that work, one config file at a time.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-              className="mt-8 flex flex-wrap gap-2"
-            >
-              <motion.a
-                href="#projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  smoothScrollTo("#projects");
-                }}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-              >
-                View projects
-                <ArrowUpRight className="size-4" />
-              </motion.a>
-              <motion.a
-                href="mailto:lordpipon@gmail.com"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2 rounded-full border border-border/60 px-5 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground"
-              >
-                Get in touch
-              </motion.a>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* About */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-          className="mt-24"
-        >
-          <motion.div variants={fadeUp} custom={0}>
-            <h2 className="text-sm font-semibold tracking-widest text-muted-foreground uppercase">
-              About
-            </h2>
-          </motion.div>
-
-          <motion.p
-            variants={fadeUp}
-            custom={1}
-            className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground"
-          >
-            I run Minecraft servers, tinker with Linux, and build small tools
-            that solve real problems. Most of my work lives on GitHub — open
-            source, documented, and built to last.
-          </motion.p>
-
-          <motion.div
-            variants={fadeUp}
-            custom={2}
-            className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4"
-          >
-            {[
-              { label: "Projects", value: "10+" },
-              { label: "Minecraft servers", value: "8" },
-              { label: "Years active", value: "4" },
-              { label: "GitHub repos", value: "20+" },
-            ].map((stat) => (
-              <motion.div
-                key={stat.label}
-                whileHover={{ y: -3 }}
-                className="rounded-xl border border-border/60 bg-card p-4"
-              >
-                <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {stat.label}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.section>
-
-        {/* Selected Work */}
-        <section id="projects" className="mt-24">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-          >
-            <motion.h2
-              variants={fadeUp}
-              custom={0}
-              className="text-sm font-semibold tracking-widest text-muted-foreground uppercase"
-            >
-              Selected work
-            </motion.h2>
-          </motion.div>
-
-          <div className="mt-6 space-y-0">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.num}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-30px" }}
-                variants={slideRight}
-                custom={i}
-              >
-                <ProjectRow project={project} />
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Minecraft Servers */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-          className="mt-24"
-        >
-          <motion.h2
-            variants={fadeUp}
-            custom={0}
-            className="text-sm font-semibold tracking-widest text-muted-foreground uppercase"
-          >
-            Minecraft servers
-          </motion.h2>
-
-          <motion.p
-            variants={fadeUp}
-            custom={1}
-            className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground"
-          >
-            Running and building Minecraft servers since 2023. Each one a
-            different experiment in community and gameplay.
-          </motion.p>
-
-          <div className="mt-6 space-y-0">
-            {minecraftTimeline.map((entry, i) => (
-              <motion.div
-                key={entry.year}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={slideRight}
-                custom={i}
-                className="border-b border-border/40 py-4 last:border-b-0"
-              >
-                <div className="flex items-center gap-6">
-                  <span className="w-12 shrink-0 text-sm font-medium tabular-nums text-muted-foreground">
-                    {entry.year}
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {entry.servers.map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full bg-muted/80 px-3 py-1 text-sm text-muted-foreground"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Socials */}
-        <section id="socials" className="mt-24">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-          >
-            <motion.h2
-              variants={fadeUp}
-              custom={0}
-              className="text-sm font-semibold tracking-widest text-muted-foreground uppercase"
-            >
-              Find me online
-            </motion.h2>
-
-            <motion.div
-              variants={fadeUp}
-              custom={1}
-              className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2"
-            >
-              {socials.map((social, i) => {
-                const external = social.href.startsWith("http");
-                return (
-                  <motion.a
-                    key={`${social.name}-${social.handle}`}
-                    href={social.href}
-                    title={social.name}
-                    whileHover={{ x: 6, scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group flex items-center gap-3 rounded-xl border border-border/60 bg-card px-4 py-3 transition-colors hover:border-foreground/20 hover:text-foreground"
-                    {...(external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    <social.icon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium">{social.name}</p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {social.handle}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
-                  </motion.a>
-                );
-              })}
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Footer */}
-        <motion.footer
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-24 border-t border-border/50 pt-8"
-        >
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-            <p className="text-xs text-muted-foreground">
-              built by lordpipon
+            <p className="hero-description">
+              Minecraft server developer. Linux enthusiast.
+              <br className="hidden sm:block" /> Building things that work, one
+              config file at a time.
             </p>
-            <div className="flex gap-4">
+            <div className="hero-actions">
+              <Button asChild size="lg">
+                <a href="#projects">
+                  Explore my work <ArrowDown />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <a href="mailto:lordpipon@gmail.com">
+                  Let’s talk <ArrowUpRight />
+                </a>
+              </Button>
+            </div>
+            <div className="hero-notes">
+              <span>
+                <Code2 size={14} /> Open-source minded
+              </span>
+              <span>
+                <Terminal size={14} /> Linux powered
+              </span>
+              <span>
+                <Gamepad2 size={14} /> Minecraft built
+              </span>
+            </div>
+          </motion.div>
+          <div className="hero-bottom">
+            <span>PERSONAL PORTFOLIO / 2026</span>
+            <a href="#about">
+              SCROLL TO EXPLORE <ArrowDown size={14} />
+            </a>
+          </div>
+        </section>
+
+        <motion.section id="about" className="content-section" {...reveal}>
+          <div className="section-heading">
+            <span className="section-index">01 / ABOUT</span>
+            <h2>Curiosity → creation.</h2>
+          </div>
+          <div className="about-grid">
+            <p>
+              I run Minecraft servers, tinker with Linux, and build small tools
+              that solve real problems. Most of my work lives on GitHub — open
+              source, documented, and built to last.
+            </p>
+            <div className="about-note">
+              <Terminal size={20} />
+              <span>
+                Always tinkering.
+                <br />
+                <strong>Always learning.</strong>
+              </span>
+            </div>
+          </div>
+          <div className="stats-grid">
+            {[
+              { value: "10+", label: "Projects" },
+              { value: "8", label: "Minecraft servers" },
+              { value: "4", label: "Years active" },
+              { value: "20+", label: "GitHub repos" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        <section id="projects" className="content-section">
+          <div className="section-heading">
+            <span className="section-index">02 / SELECTED WORK</span>
+            <div className="section-title-row">
+              <h2>Things I’ve built.</h2>
               <a
+                className="text-link"
                 href="https://github.com/lordpipon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-muted-foreground transition-colors hover:text-foreground"
               >
-                GitHub
-              </a>
-              <a
-                href="mailto:lordpipon@gmail.com"
-                className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Email
+                All on GitHub <ArrowUpRight size={16} />
               </a>
             </div>
+            <p>A collection of experiments, tools, and things I care about.</p>
           </div>
-        </motion.footer>
-      </main>
-    </>
-  );
-}
-
-function ProjectRow({
-  project,
-}: {
-  project: (typeof projects)[number];
-}) {
-  return (
-    <div className="group border-b border-border/40 py-5 last:border-b-0">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-medium tabular-nums text-muted-foreground">
-              {project.num}
-            </span>
-            <project.icon className="size-4 text-muted-foreground" />
-            <h3 className="text-base font-semibold tracking-tight">
-              {project.title}
-            </h3>
-          </div>
-          <p className="mt-1.5 ml-7 text-sm leading-relaxed text-muted-foreground">
-            {project.description}
-          </p>
-          <div className="mt-2 ml-7 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-muted/80 px-2.5 py-0.5 text-xs text-muted-foreground"
+          <div className="projects-grid">
+            {projects.map((project, i) => (
+              <motion.article
+                key={project.num}
+                {...reveal}
+                className={`project-card ${i === 0 ? "featured-project" : ""}`}
               >
-                {tag}
-              </span>
+                <div className="project-top">
+                  <div className="project-icon">
+                    <project.icon size={23} />
+                  </div>
+                  <span className="project-number">
+                    {i === 0 ? "FEATURED / " : ""}
+                    {project.num}
+                  </span>
+                </div>
+                <div className="project-copy">
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                </div>
+                <div className="project-tags">
+                  {project.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+                <div className="project-actions">
+                  <Button asChild variant="outline" size="sm">
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} source code`}
+                    >
+                      <Github /> Source
+                    </a>
+                  </Button>
+                  <Button asChild variant="ghost" size="sm">
+                    <a
+                      href={project.liveHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${project.title}`}
+                    >
+                      {project.liveLabel ?? "Visit project"}
+                      <ArrowUpRight />
+                    </a>
+                  </Button>
+                </div>
+                {i === 0 && (
+                  <div className="terminal-art" aria-hidden="true">
+                    <div>
+                      <i />
+                      <i />
+                      <i />
+                      <span>~/dotfiles</span>
+                    </div>
+                    <p>
+                      <b>❯</b> whoami
+                      <br />
+                      <span>lordpipon</span>
+                    </p>
+                    <p>
+                      <b>❯</b> cat philosophy.txt
+                      <br />
+                      <span>
+                        less clutter.
+                        <br />
+                        more possibility.
+                      </span>
+                    </p>
+                    <p>
+                      <b>❯</b> <span className="terminal-caret">_</span>
+                    </p>
+                  </div>
+                )}
+              </motion.article>
             ))}
           </div>
-        </div>
-        <div className="flex shrink-0 gap-1.5 pt-1">
-          {project.href && (
-            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-lg border border-border/60 bg-muted/50 px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
+        </section>
+
+        <section id="servers" className="content-section">
+          <div className="section-heading">
+            <span className="section-index">03 / MINECRAFT</span>
+            <h2>More than just blocks.</h2>
+            <p>
+              Building servers and communities since 2023.
+              <br />
+              Each one a different experiment in gameplay.
+            </p>
+          </div>
+          <div className="timeline">
+            {minecraftTimeline.map((entry) => (
+              <div className="timeline-row" key={entry.year}>
+                <span className="timeline-year">{entry.year}</span>
+                <div>
+                  {entry.servers.map((server) => (
+                    <span className="server-chip" key={server}>
+                      <Gamepad2 size={15} />
+                      {server}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="timeline-row">
+              <span className="timeline-year text-primary">NEXT</span>
+              <div>
+                <span className="server-chip upcoming">
+                  <span className="status-dot" />
+                  PrismPractice V2 <small>IN THE WORKS</small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="socials" className="content-section">
+          <div className="contact-banner">
+            <span className="section-index">04 / CONNECT</span>
+            <h2>
+              Good things start
+              <br />
+              with a <span>hello.</span>
+            </h2>
+            <p>Have a project in mind, a question, or just want to chat?</p>
+            <Button asChild size="lg">
+              <a href="mailto:lordpipon@gmail.com">
+                <Mail /> Get in touch <ArrowUpRight />
+              </a>
+            </Button>
+          </div>
+          <div className="social-grid">
+            {socials.map((social) => (
+              <a
+                key={social.href}
+                href={social.href}
+                {...(social.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                className="social-card"
               >
-                <ArrowUpRight className="size-3.5" />
-                Code
-              </Link>
-            </motion.div>
-          )}
-          {project.liveHref && (
-            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href={project.liveHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-lg border border-border/60 bg-muted/50 px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
-              >
-                <ArrowUpRight className="size-3.5" />
-                {project.liveLabel ?? "Live"}
-              </Link>
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </div>
+                <social.icon size={19} />
+                <span>
+                  <strong>{social.name}</strong>
+                  <small>{social.handle}</small>
+                </span>
+                <ArrowUpRight size={16} className="social-arrow" />
+              </a>
+            ))}
+          </div>
+        </section>
+        <footer>
+          <a href="#home" className="wordmark">
+            lordpipon
+            <Asterisk aria-hidden="true" size={24} />
+          </a>
+          <p>Built with care. Always a work in progress.</p>
+          <a href="#home" className="text-link">
+            Back to top <ArrowUp size={15} />
+          </a>
+        </footer>
+      </main>
+    </>
   );
 }

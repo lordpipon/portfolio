@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { CustomCursor } from "@/components/custom-cursor";
 
 import "./globals.css";
 
@@ -16,8 +15,7 @@ export const metadata: Metadata = {
     default: "lordpipon",
     template: "%s | lordpipon",
   },
-  description:
-    "A minecraft server developer, linux user and a developer.",
+  description: "A minecraft server developer, linux user and a developer.",
   icons: {
     icon: "/pfp.png",
   },
@@ -35,13 +33,10 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="bg-blobs" />
-          <div className="grain" />
-          <CustomCursor />
           {children}
         </ThemeProvider>
       </body>

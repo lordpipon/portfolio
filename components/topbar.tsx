@@ -1,187 +1,116 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
-import { Menu, X } from "lucide-react";
-
+import { useEffect, useRef, useState } from "react";
+import { Asterisk, Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-const navLinks = [
+const links = [
   { label: "Home", href: "#home" },
-  { label: "Socials", href: "#socials" },
-  { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#projects" },
+  { label: "Connect", href: "#socials" },
 ];
 
-function smoothScrollTo(href: string) {
-  const id = href.replace("#", "");
-  const el = document.getElementById(id);
-  if (!el) return;
-  const y = el.getBoundingClientRect().top + window.scrollY - 72;
-  window.scrollTo({ top: y, behavior: "smooth" });
-}
-
 export function Topbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState("#home");
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 20);
-  });
+  const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const sections = navLinks.map((l) => l.href.slice(1));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActive(`#${entry.target.id}`);
-          }
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        let current = "#home";
+        for (const link of links) {
+          const section = document.querySelector(link.href);
+          if (section && section.getBoundingClientRect().top <= 180)
+            current = link.href;
         }
-      },
-      { rootMargin: "-40% 0px -55% 0px" }
-    );
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+        if (
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 4
+        )
+          current = "#socials";
+        setActive(current);
+      });
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        if (toggleRef.current?.getAttribute("aria-expanded") === "true")
+          toggleRef.current.focus();
+      }
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    window.addEventListener("keydown", escape);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("keydown", escape);
+    };
   }, []);
 
-  const handleNav = useCallback(
-    (href: string) => {
-      setActive(href);
-      smoothScrollTo(href);
-    },
-    []
-  );
-
   return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border/50 bg-background/80 backdrop-blur-xl shadow-sm shadow-black/5"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex h-14 max-w-2xl items-center justify-between px-5 sm:px-8">
-        <motion.a
-          href="#home"
-          onClick={(e) => {
-            e.preventDefault();
-            handleNav("#home");
-          }}
-          className="flex items-baseline gap-1.5 text-sm font-semibold tracking-tight"
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          lordpipon
-          <span className="text-sm font-semibold tracking-tight">portfolio</span>
-        </motion.a>
-
-        <div className="hidden items-center gap-2 sm:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => {
-                e.preventDefault();
-                handleNav(link.href);
-              }}
-              className={`relative rounded-full border px-4 py-1.5 text-sm transition-all duration-300 ${
-                active === link.href
-                  ? "border-foreground/25 bg-muted text-foreground"
-                  : "border-transparent text-muted-foreground hover:border-foreground/15 hover:bg-muted/60 hover:text-foreground"
-              }`}
-            >
-              {active === link.href && (
-                <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 -z-10 rounded-full bg-muted"
-                  transition={{ type: "spring", stiffness: 300, damping: 28 }}
-                />
-              )}
-              <span className="relative z-10">{link.label}</span>
-            </a>
-          ))}
-          <div className="ml-2">
+    <header className="fixed inset-x-0 top-4 z-50 mx-auto max-w-[1056px] px-4 sm:px-10">
+      <nav
+        aria-label="Main navigation"
+        className="rounded-2xl border border-border bg-background/90 px-4 shadow-lg shadow-black/5 backdrop-blur-xl sm:px-5"
+      >
+        <div className="flex h-16 items-center justify-between gap-3">
+          <a href="#home" className="wordmark" onClick={() => setOpen(false)}>
+            lordpipon
+            <Asterisk aria-hidden="true" size={24} />
+          </a>
+          <div className="hidden items-center gap-1 sm:flex">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={active === link.href ? "location" : undefined}
+                className={`rounded-lg px-4 py-2.5 text-xs transition-colors ${active === link.href ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
             <ThemeToggle />
+            <button
+              ref={toggleRef}
+              type="button"
+              className="grid size-11 place-items-center rounded-xl border border-border hover:bg-muted sm:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <X size={19} /> : <Menu size={19} />}
+            </button>
           </div>
         </div>
-
-        <button
-          className="sm:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <AnimatePresence mode="wait">
-            {mobileOpen ? (
-              <motion.div
-                key="close"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <X className="size-5 text-muted-foreground" />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="menu"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <Menu className="size-5 text-muted-foreground" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </button>
-      </nav>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-border/50 bg-background/90 backdrop-blur-xl sm:hidden"
+        {open && (
+          <div
+            id="mobile-navigation"
+            className="grid gap-1 border-t border-border py-3 sm:hidden"
           >
-            <div className="flex flex-col gap-1 px-4 py-3">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setMobileOpen(false);
-                    handleNav(link.href);
-                  }}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  className={`rounded-lg px-3 py-2 text-sm transition-colors ${
-                    active === link.href
-                      ? "bg-muted text-foreground font-medium"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                >
-                  {link.label}
-                </motion.a>
-              ))}
-              <div className="px-3 py-2">
-                <ThemeToggle />
-              </div>
-            </div>
-          </motion.div>
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={active === link.href ? "location" : undefined}
+                onClick={() => setOpen(false)}
+                className={`rounded-lg px-4 py-3 text-sm ${active === link.href ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         )}
-      </AnimatePresence>
-    </motion.header>
+      </nav>
+    </header>
   );
 }
