@@ -2,16 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Asterisk, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Work", href: "#projects" },
-  { label: "Connect", href: "#socials" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Topbar() {
+  const pathname = usePathname();
+  const hrefFor = (href: string) =>
+    href.startsWith("#") && pathname !== "/" ? `/${href}` : href;
   const [active, setActive] = useState("#home");
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -21,8 +26,13 @@ export function Topbar() {
     const update = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
+        if (pathname !== "/") {
+          setActive(pathname);
+          return;
+        }
         let current = "#home";
         for (const link of links) {
+          if (!link.href.startsWith("#")) continue;
           const section = document.querySelector(link.href);
           if (section && section.getBoundingClientRect().top <= 180)
             current = link.href;
@@ -31,7 +41,7 @@ export function Topbar() {
           window.innerHeight + window.scrollY >=
           document.documentElement.scrollHeight - 4
         )
-          current = "#socials";
+          current = "#projects";
         setActive(current);
       });
     };
@@ -52,7 +62,7 @@ export function Topbar() {
       window.removeEventListener("resize", update);
       window.removeEventListener("keydown", escape);
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <header className="fixed inset-x-0 top-4 z-50 mx-auto max-w-[1056px] px-4 sm:px-10">
@@ -61,20 +71,24 @@ export function Topbar() {
         className="rounded-2xl border border-border bg-background/90 px-4 shadow-lg shadow-black/5 backdrop-blur-xl sm:px-5"
       >
         <div className="flex h-16 items-center justify-between gap-3">
-          <a href="#home" className="wordmark" onClick={() => setOpen(false)}>
+          <Link
+            href={hrefFor("#home")}
+            className="wordmark"
+            onClick={() => setOpen(false)}
+          >
             lordpipon
             <Asterisk aria-hidden="true" size={24} />
-          </a>
+          </Link>
           <div className="hidden items-center gap-1 sm:flex">
             {links.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                href={hrefFor(link.href)}
                 aria-current={active === link.href ? "location" : undefined}
                 className={`rounded-lg px-4 py-2.5 text-xs transition-colors ${active === link.href ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="flex items-center gap-2">
@@ -98,15 +112,15 @@ export function Topbar() {
             className="grid gap-1 border-t border-border py-3 sm:hidden"
           >
             {links.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                href={hrefFor(link.href)}
                 aria-current={active === link.href ? "location" : undefined}
                 onClick={() => setOpen(false)}
                 className={`rounded-lg px-4 py-3 text-sm ${active === link.href ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         )}

@@ -3,12 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import {
   Asterisk,
-  Cloud,
   Github,
-  Mail,
-  MessageCircle,
-  Music2,
-  Youtube,
   ArrowUpRight,
   ArrowDown,
   ArrowUp,
@@ -17,68 +12,11 @@ import {
   Search,
   Terminal,
   Gamepad2,
-  Code2,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Topbar } from "@/components/topbar";
 import { Button } from "@/components/ui/button";
-
-const socials = [
-  {
-    name: "Discord",
-    handle: "@piponidlo",
-    href: "https://discord.com/users/piponidlo",
-    icon: MessageCircle,
-  },
-  {
-    name: "Bluesky",
-    handle: "@lordpipon.com",
-    href: "https://bsky.app/profile/lordpipon.com",
-    icon: Cloud,
-  },
-  {
-    name: "TikTok",
-    handle: "@lordpipon",
-    href: "https://www.tiktok.com/@lordpipon",
-    icon: Music2,
-  },
-  {
-    name: "TikTok",
-    handle: "@thinkpad.sh",
-    href: "https://www.tiktok.com/@thinkpad.sh",
-    icon: Music2,
-  },
-  {
-    name: "YouTube",
-    handle: "@piponidlo",
-    href: "https://www.youtube.com/@piponidlo",
-    icon: Youtube,
-  },
-  {
-    name: "GitHub",
-    handle: "@lordpipon",
-    href: "https://github.com/lordpipon",
-    icon: Github,
-  },
-  {
-    name: "Steam",
-    handle: "@lordpipon",
-    href: "https://steamcommunity.com/id/lordpipon/",
-    icon: Gamepad2,
-  },
-  {
-    name: "JobIndustries",
-    handle: "@jobindustries",
-    href: "https://steamcommunity.com/id/jobindustries/",
-    icon: Gamepad2,
-  },
-  {
-    name: "Email",
-    handle: "lordpipon@gmail.com",
-    href: "mailto:lordpipon@gmail.com",
-    icon: Mail,
-  },
-];
 
 const projects = [
   {
@@ -134,7 +72,10 @@ const minecraftTimeline = [
   { year: "2023", servers: ["Pipoooonio"] },
   { year: "2024", servers: ["Minefishing"] },
   { year: "2025", servers: ["ForgeSMP", "SentinelSMP"] },
-  { year: "2026", servers: ["FishieSMP", "PrismPractice", "LushVanilla"] },
+  {
+    year: "2026",
+    servers: ["FishieSMP", "PrismPractice", "LushVanilla", "CatplayMC"],
+  },
 ];
 
 export default function Home() {
@@ -159,9 +100,6 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65 }}
           >
-            <div className="eyebrow">
-              <span className="status-dot" /> A LITTLE CORNER OF THE INTERNET
-            </div>
             <div className="hero-heading">
               <h1>
                 Hey, I’m
@@ -169,17 +107,25 @@ export default function Home() {
                 <span>lordpipon</span>
                 <span className="hero-period">.</span>
               </h1>
-              <div className="avatar-frame">
-                <Image
-                  src="/pfp.png"
-                  alt="lordpipon's avatar"
-                  width={128}
-                  height={128}
-                  priority
+              <div className="hero-sculpture">
+                <div className="orbital-ring orbital-one" aria-hidden="true" />
+                <div className="orbital-ring orbital-two" aria-hidden="true" />
+                <div
+                  className="orbital-ring orbital-three"
+                  aria-hidden="true"
                 />
-                <span className="avatar-label">
-                  <Terminal size={13} /> hello, world
-                </span>
+                <div className="avatar-frame">
+                  <Image
+                    src="/pfp.png"
+                    alt="lordpipon's avatar"
+                    width={128}
+                    height={128}
+                    priority
+                  />
+                  <span className="avatar-label">
+                    <Terminal size={13} /> hello, world
+                  </span>
+                </div>
               </div>
             </div>
             <p className="hero-description">
@@ -194,21 +140,10 @@ export default function Home() {
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href="mailto:lordpipon@gmail.com">
+                <Link href="/contact">
                   Let’s talk <ArrowUpRight />
-                </a>
+                </Link>
               </Button>
-            </div>
-            <div className="hero-notes">
-              <span>
-                <Code2 size={14} /> Open-source minded
-              </span>
-              <span>
-                <Terminal size={14} /> Linux powered
-              </span>
-              <span>
-                <Gamepad2 size={14} /> Minecraft built
-              </span>
             </div>
           </motion.div>
           <div className="hero-bottom">
@@ -362,7 +297,7 @@ export default function Home() {
           </div>
           <div className="timeline">
             {minecraftTimeline.map((entry) => (
-              <div className="timeline-row" key={entry.year}>
+              <motion.div className="timeline-row" key={entry.year} {...reveal}>
                 <span className="timeline-year">{entry.year}</span>
                 <div>
                   {entry.servers.map((server) => (
@@ -372,55 +307,11 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
-            <div className="timeline-row">
-              <span className="timeline-year text-primary">NEXT</span>
-              <div>
-                <span className="server-chip upcoming">
-                  <span className="status-dot" />
-                  PrismPractice V2 <small>IN THE WORKS</small>
-                </span>
-              </div>
-            </div>
           </div>
         </section>
 
-        <section id="socials" className="content-section">
-          <div className="contact-banner">
-            <span className="section-index">04 / CONNECT</span>
-            <h2>
-              Good things start
-              <br />
-              with a <span>hello.</span>
-            </h2>
-            <p>Have a project in mind, a question, or just want to chat?</p>
-            <Button asChild size="lg">
-              <a href="mailto:lordpipon@gmail.com">
-                <Mail /> Get in touch <ArrowUpRight />
-              </a>
-            </Button>
-          </div>
-          <div className="social-grid">
-            {socials.map((social) => (
-              <a
-                key={social.href}
-                href={social.href}
-                {...(social.href.startsWith("http")
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className="social-card"
-              >
-                <social.icon size={19} />
-                <span>
-                  <strong>{social.name}</strong>
-                  <small>{social.handle}</small>
-                </span>
-                <ArrowUpRight size={16} className="social-arrow" />
-              </a>
-            ))}
-          </div>
-        </section>
         <footer>
           <a href="#home" className="wordmark">
             lordpipon

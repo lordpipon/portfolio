@@ -147,28 +147,12 @@ body {
 .hero {
   padding-top: 178px;
 }
-.eyebrow,
 .section-index,
 .hero-bottom,
 .project-number {
   font-family: ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: 0.12em;
-}
-.eyebrow {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  color: var(--primary);
-}
-.status-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--primary);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 .hero-heading {
   display: flex;
@@ -231,19 +215,6 @@ h1 > span:not(.hero-period) {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 30px;
-}
-.hero-notes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  margin-top: 33px;
-  color: var(--muted-foreground);
-  font-size: 11px;
-}
-.hero-notes span {
-  display: flex;
-  gap: 7px;
-  align-items: center;
 }
 .hero-bottom {
   margin-top: 75px;
@@ -515,18 +486,6 @@ h3 {
 .server-chip svg {
   color: var(--muted-foreground);
 }
-.upcoming {
-  color: var(--primary);
-}
-.upcoming small {
-  font:
-    8px ui-monospace,
-    monospace;
-  margin-left: 5px;
-  padding: 4px 6px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
 .contact-banner {
   border: 1px solid var(--border);
   padding: 45px;
@@ -643,10 +602,6 @@ footer p {
   .hero-description {
     font-size: 15px;
   }
-  .hero-notes {
-    gap: 13px;
-    font-size: 10px;
-  }
   .hero-bottom {
     margin-top: 48px;
     font-size: 8px;
@@ -719,5 +674,266 @@ footer p {
   }
   .project-card:hover {
     transform: none;
+  }
+}
+
+/* Decorative layers stay behind every interactive element. */
+body {
+  isolation: isolate;
+}
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--primary) 9%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--primary) 9%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, #0006 60%, transparent);
+}
+.ambient-glow {
+  position: absolute;
+  width: min(65vw, 700px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 10%, transparent),
+    transparent 70%
+  );
+  animation: ambient-drift 22s ease-in-out infinite alternate;
+}
+.ambient-glow-one {
+  right: -15%;
+  top: -15%;
+}
+.ambient-glow-two {
+  left: -20%;
+  bottom: -25%;
+  animation-delay: -11s;
+}
+.hero-heading {
+  margin-top: 0;
+}
+.avatar-frame {
+  animation: avatar-float 7s ease-in-out infinite;
+}
+.hero-actions a svg,
+.social-arrow {
+  transition: transform 0.25s ease;
+}
+.hero-actions a:hover svg {
+  transform: translate(2px, -2px);
+}
+.hero-actions a[href^="#"]:hover svg {
+  transform: translateY(3px);
+}
+.social-card:hover .social-arrow {
+  transform: translate(2px, -2px);
+}
+.contact-page {
+  padding-top: 145px;
+}
+.contact-page h1 {
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: 1.1;
+}
+.contact-page h1 span {
+  color: var(--primary);
+}
+.contact-page .social-card {
+  animation: enter-up 0.6s ease both;
+}
+.contact-page .social-card:nth-child(3n + 1) {
+  animation-delay: 0.08s;
+}
+.contact-page .social-card:nth-child(3n + 2) {
+  animation-delay: 0.16s;
+}
+.contact-page .social-card:nth-child(3n + 3) {
+  animation-delay: 0.24s;
+}
+.page-enter {
+  animation: enter-up 0.65s ease both;
+}
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ambient-drift {
+  to {
+    transform: translate(-8%, 15%) scale(1.15);
+  }
+}
+@keyframes avatar-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(6deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+@media (max-width: 640px) {
+  .ambient-grid {
+    background-size: 40px 40px;
+  }
+  .contact-page {
+    padding-top: 120px;
+  }
+}
+
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 100;
+  background: var(--primary);
+  transform: scaleX(var(--reading-progress, 0));
+  transform-origin: left;
+  box-shadow: 0 0 16px var(--primary);
+  pointer-events: none;
+}
+.hero-sculpture {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: grid;
+  place-items: center;
+  perspective: 900px;
+  flex-shrink: 0;
+}
+.hero-sculpture .avatar-frame {
+  margin: 0;
+  animation: none;
+  transition: transform 0.35s ease;
+  background: linear-gradient(140deg, var(--card), var(--background));
+  box-shadow:
+    16px 24px 50px #0004,
+    inset 0 1px 0 color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.orbital-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+.orbital-one {
+  transform: rotateX(65deg) rotateZ(-25deg);
+  animation: orbit-one 18s linear infinite;
+}
+.orbital-two {
+  inset: 15px;
+  transform: rotateY(65deg) rotateZ(35deg);
+  animation: orbit-two 24s linear infinite reverse;
+}
+.orbital-three {
+  inset: -20px;
+  border-style: dashed;
+  opacity: 0.35;
+  transform: rotateX(55deg) rotateY(-25deg);
+}
+.orbital-one::after,
+.orbital-two::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  top: 14%;
+  left: 14%;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 20px var(--primary);
+}
+.project-card,
+.social-card {
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.project-card::after,
+.social-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(
+    circle at var(--shine-x, 50%) var(--shine-y, 0%),
+    color-mix(in srgb, var(--primary) 12%, transparent),
+    transparent 65%
+  );
+}
+.project-card:hover::after,
+.social-card:hover::after {
+  opacity: 1;
+}
+.project-card:hover {
+  box-shadow: 0 20px 55px #0002;
+}
+.hero h1 {
+  text-wrap: balance;
+}
+.hero h1 > span:not(.hero-period) {
+  text-shadow: 0 8px 45px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+.ambient-grid {
+  transform: perspective(800px) rotateX(18deg) scale(1.15);
+  transform-origin: center top;
+}
+@keyframes orbit-one {
+  to {
+    transform: rotateX(65deg) rotateZ(335deg);
+  }
+}
+@keyframes orbit-two {
+  to {
+    transform: rotateY(65deg) rotateZ(395deg);
+  }
+}
+@media (max-width: 640px) {
+  .hero-sculpture {
+    width: 100px;
+    height: 130px;
+  }
+  .orbital-three {
+    inset: -7px;
+  }
+  .orbital-two {
+    inset: 5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-sculpture *,
+  .project-card,
+  .social-card {
+    animation: none !important;
+    transition: none !important;
   }
 }
