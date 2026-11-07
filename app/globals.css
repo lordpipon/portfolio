@@ -802,3 +802,138 @@ body {
     padding-top: 120px;
   }
 }
+
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 100;
+  background: var(--primary);
+  transform: scaleX(var(--reading-progress, 0));
+  transform-origin: left;
+  box-shadow: 0 0 16px var(--primary);
+  pointer-events: none;
+}
+.hero-sculpture {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: grid;
+  place-items: center;
+  perspective: 900px;
+  flex-shrink: 0;
+}
+.hero-sculpture .avatar-frame {
+  margin: 0;
+  animation: none;
+  transition: transform 0.35s ease;
+  background: linear-gradient(140deg, var(--card), var(--background));
+  box-shadow:
+    16px 24px 50px #0004,
+    inset 0 1px 0 color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.orbital-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+.orbital-one {
+  transform: rotateX(65deg) rotateZ(-25deg);
+  animation: orbit-one 18s linear infinite;
+}
+.orbital-two {
+  inset: 15px;
+  transform: rotateY(65deg) rotateZ(35deg);
+  animation: orbit-two 24s linear infinite reverse;
+}
+.orbital-three {
+  inset: -20px;
+  border-style: dashed;
+  opacity: 0.35;
+  transform: rotateX(55deg) rotateY(-25deg);
+}
+.orbital-one::after,
+.orbital-two::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  top: 14%;
+  left: 14%;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 20px var(--primary);
+}
+.project-card,
+.social-card {
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.project-card::after,
+.social-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(
+    circle at var(--shine-x, 50%) var(--shine-y, 0%),
+    color-mix(in srgb, var(--primary) 12%, transparent),
+    transparent 65%
+  );
+}
+.project-card:hover::after,
+.social-card:hover::after {
+  opacity: 1;
+}
+.project-card:hover {
+  box-shadow: 0 20px 55px #0002;
+}
+.hero h1 {
+  text-wrap: balance;
+}
+.hero h1 > span:not(.hero-period) {
+  text-shadow: 0 8px 45px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+.ambient-grid {
+  transform: perspective(800px) rotateX(18deg) scale(1.15);
+  transform-origin: center top;
+}
+@keyframes orbit-one {
+  to {
+    transform: rotateX(65deg) rotateZ(335deg);
+  }
+}
+@keyframes orbit-two {
+  to {
+    transform: rotateY(65deg) rotateZ(395deg);
+  }
+}
+@media (max-width: 640px) {
+  .hero-sculpture {
+    width: 100px;
+    height: 130px;
+  }
+  .orbital-three {
+    inset: -7px;
+  }
+  .orbital-two {
+    inset: 5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-sculpture *,
+  .project-card,
+  .social-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}

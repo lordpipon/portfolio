@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
+import { DepthEffects } from "@/components/depth-effects";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -42,6 +43,7 @@ export default function RootLayout({
             <div className="ambient-glow ambient-glow-one" />
             <div className="ambient-glow ambient-glow-two" />
           </div>
+          <DepthEffects />
           {children}
         </ThemeProvider>
       </body>

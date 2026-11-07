@@ -107,17 +107,25 @@ export default function Home() {
                 <span>lordpipon</span>
                 <span className="hero-period">.</span>
               </h1>
-              <div className="avatar-frame">
-                <Image
-                  src="/pfp.png"
-                  alt="lordpipon's avatar"
-                  width={128}
-                  height={128}
-                  priority
+              <div className="hero-sculpture">
+                <div className="orbital-ring orbital-one" aria-hidden="true" />
+                <div className="orbital-ring orbital-two" aria-hidden="true" />
+                <div
+                  className="orbital-ring orbital-three"
+                  aria-hidden="true"
                 />
-                <span className="avatar-label">
-                  <Terminal size={13} /> hello, world
-                </span>
+                <div className="avatar-frame">
+                  <Image
+                    src="/pfp.png"
+                    alt="lordpipon's avatar"
+                    width={128}
+                    height={128}
+                    priority
+                  />
+                  <span className="avatar-label">
+                    <Terminal size={13} /> hello, world
+                  </span>
+                </div>
               </div>
             </div>
             <p className="hero-description">
