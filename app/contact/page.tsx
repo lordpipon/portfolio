@@ -47,8 +47,8 @@ const socials = [
   },
   {
     name: "YouTube",
-    handle: "@piponidlo",
-    href: "https://www.youtube.com/@piponidlo",
+    handle: "@lordpipon",
+    href: "https://www.youtube.com/@lordpipon",
     icon: Youtube,
   },
   {
