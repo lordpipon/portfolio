@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
-  { label: "Home", href: "#home" },
-  { label: "Work", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "/contact" },
+  { label: "home", href: "#home" },
+  { label: "work", href: "#projects" },
+  { label: "about", href: "#about" },
+  { label: "contact", href: "/contact" },
 ];
 
 export function Topbar() {
@@ -86,7 +87,8 @@ export function Topbar() {
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="nav-controls">
+            <ThemeToggle />
             <button
               ref={toggleRef}
               type="button"

@@ -1,10 +1,8 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Monitor, Moon, Sun } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,41 +13,34 @@ import {
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const current = theme ?? "system";
-
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const current = mounted ? (theme ?? "system") : "system";
+  const Icon = current === "light" ? Sun : current === "dark" ? Moon : Monitor;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" aria-label="Toggle theme">
-          {!mounted ? (
-            <Monitor className="size-4" />
-          ) : (
-            <>
-              <Sun className="size-4 scale-100 rotate-0 transition-all duration-300 dark:scale-0 dark:-rotate-90" />
-              <Moon className="absolute size-4 scale-0 rotate-90 transition-all duration-300 dark:scale-100 dark:rotate-0" />
-            </>
-          )}
-        </Button>
+        <button
+          type="button"
+          className="theme-trigger"
+          aria-label="Change theme"
+        >
+          <Icon size={17} />
+        </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="theme-menu">
         <DropdownMenuRadioGroup value={current} onValueChange={setTheme}>
-          <DropdownMenuRadioItem value="light" className="cursor-pointer">
-            <Sun className="size-4" />
-            Light
+          <DropdownMenuRadioItem value="light">
+            <Sun size={15} />
+            light
           </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="dark" className="cursor-pointer">
-            <Moon className="size-4" />
-            Dark
+          <DropdownMenuRadioItem value="dark">
+            <Moon size={15} />
+            dark
           </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="system" className="cursor-pointer">
-            <Monitor className="size-4" />
-            System
+          <DropdownMenuRadioItem value="system">
+            <Monitor size={15} />
+            device
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>

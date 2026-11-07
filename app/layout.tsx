@@ -18,9 +18,6 @@ export const metadata: Metadata = {
     template: "%s | lordpipon",
   },
   description: "A minecraft server developer, linux user and a developer.",
-  icons: {
-    icon: "/pfp.png",
-  },
 };
 
 export default function RootLayout({
@@ -36,7 +33,6 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          forcedTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

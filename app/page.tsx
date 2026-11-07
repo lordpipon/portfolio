@@ -5,17 +5,19 @@ import {
   ArrowUpRight,
   ArrowDown,
   ArrowUp,
-  Server,
-  Globe,
   Search,
   Terminal,
   Gamepad2,
+  Monitor,
+  Clapperboard,
+  Youtube,
+  Music2,
+  MapPin,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Topbar } from "@/components/topbar";
 import { StudioCallout } from "@/components/studio-callout";
-import { BlockMonogram } from "@/components/block-monogram";
 
 const projects = [
   {
@@ -27,7 +29,7 @@ const projects = [
     href: "https://github.com/lordpipon/server-swaydots",
     liveHref: "https://lordpipon.github.io/serverswaydots/",
     liveLabel: "Docs",
-    icon: Server,
+    visual: "sway",
   },
   {
     num: "02",
@@ -36,7 +38,16 @@ const projects = [
     tags: ["Project"],
     href: "https://github.com/lordpipon/catplay",
     liveHref: "https://catplay.org",
-    icon: Gamepad2,
+    visual: "cat",
+  },
+  {
+    num: "catmash",
+    title: "Catmash",
+    description:
+      "A multiplayer video editor where players create videos together on a shared timeline.",
+    tags: ["Video", "Multiplayer", "Web"],
+    href: "https://github.com/lordpipon/catmash",
+    visual: "film",
   },
   {
     num: "03",
@@ -45,7 +56,7 @@ const projects = [
     tags: ["CLI", "Tool"],
     href: "https://github.com/go-ducky/cli",
     liveHref: "https://goducky.lordpipon.com",
-    icon: Terminal,
+    visual: "terminal",
   },
   {
     num: "04",
@@ -54,7 +65,7 @@ const projects = [
     tags: ["Linux", "Organization"],
     href: "https://github.com/Darkian-Linux/",
     liveHref: "https://darkian.xyz",
-    icon: Globe,
+    visual: "computer",
   },
   {
     num: "05",
@@ -63,7 +74,7 @@ const projects = [
     tags: ["Search", "Web"],
     href: "https://github.com/Darkian-Linux/DarkianSearch",
     liveHref: "https://search.darkian.xyz",
-    icon: Search,
+    visual: "search",
   },
 ];
 
@@ -93,34 +104,32 @@ export default function Home() {
       <Topbar />
       <main id="main" className="portfolio-shell">
         <section id="home" className="hero">
+          <p className="hero-location">
+            <MapPin size={14} /> Based in Czech Republic
+          </p>
           <div className="hero-masthead">
             <h1>
               lordpipon<span>.</span>
             </h1>
-            <span className="hero-year">
-              Portfolio
-              <br />
-              2026
-            </span>
           </div>
           <div className="hero-composition">
             <div className="hero-copy">
               <h2>
-                Minecraft servers.
+                minecraft servers.
                 <br />
-                Linux.
+                linux.
                 <br />
-                <span>Small tools.</span>
+                <span>small tools.</span>
               </h2>
               <p>
                 I build servers, write configs, and make things I want to use.
               </p>
               <div className="hero-actions">
                 <a className="action-button" href="#projects">
-                  Selected work <ArrowDown size={17} />
+                  selected work <ArrowDown size={17} />
                 </a>
                 <Link className="text-link" href="/contact">
-                  Contact <ArrowUpRight size={17} />
+                  contact <ArrowUpRight size={17} />
                 </Link>
               </div>
               <div className="identity-note">
@@ -137,15 +146,18 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <BlockMonogram />
           </div>
         </section>
 
         <section id="projects" className="work-section">
           <div className="section-heading">
-            <h2>
-              Selected work<span> / 05</span>
-            </h2>
+            <div className="work-heading">
+              <h2>
+                selected work
+                <span> / {String(projects.length).padStart(2, "0")}</span>
+              </h2>
+              <p>my projects</p>
+            </div>
             <a
               className="text-link"
               href="https://github.com/lordpipon"
@@ -161,29 +173,29 @@ export default function Home() {
               {...reveal}
               className={`work-item work-item-${i}`}
             >
-              <span className="work-number">{project.num}</span>
+              <span className="work-number">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               <div className="work-visual" aria-hidden="true">
-                {i === 0 ? (
+                {project.visual === "sway" ? (
                   <div className="sway-layout">
                     <div />
                     <div />
                     <div />
                   </div>
-                ) : i === 1 ? (
+                ) : project.visual === "cat" ? (
                   <div className="pixel-cat">
                     <i />
                     <i />
                     <b />
                     <b />
                   </div>
-                ) : i === 2 ? (
+                ) : project.visual === "terminal" ? (
                   <Terminal size={62} strokeWidth={1} />
-                ) : i === 3 ? (
-                  <div className="linux-symbol">
-                    <div />
-                    <div />
-                    <div />
-                  </div>
+                ) : project.visual === "computer" ? (
+                  <Monitor size={76} strokeWidth={1} />
+                ) : project.visual === "film" ? (
+                  <Clapperboard size={70} strokeWidth={1} />
                 ) : (
                   <Search size={70} strokeWidth={1} />
                 )}
@@ -193,32 +205,43 @@ export default function Home() {
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 <div className="work-links">
-                  <a
-                    href={project.liveHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${project.title}`}
-                  >
-                    {project.liveLabel ?? "Visit project"}{" "}
-                    <ArrowUpRight size={16} />
-                  </a>
+                  {project.liveHref && (
+                    <a
+                      href={project.liveHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${project.title}`}
+                    >
+                      {project.liveLabel ?? "Visit project"}{" "}
+                      <ArrowUpRight size={16} />
+                    </a>
+                  )}
                   <a
                     href={project.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View ${project.title} source code`}
                   >
-                    <Github size={14} /> Source
+                    <Github size={14} /> source
                   </a>
                 </div>
               </div>
             </motion.article>
           ))}
+          <a
+            className="more-projects"
+            href="https://github.com/lordpipon"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>more projects on github</span>
+            <ArrowUpRight size={24} />
+          </a>
         </section>
 
         <motion.section {...reveal} id="about" className="about-section">
           <div className="section-heading">
-            <h2>About</h2>
+            <h2>about</h2>
           </div>
           <div className="about-body">
             <p>
@@ -232,7 +255,8 @@ export default function Home() {
               <p>
                 I’m a developer based in the Czech Republic. I work on Minecraft
                 servers, Linux setups, and web projects. My GitHub includes Sway
-                dotfiles, command-line tools, and projects from Darkian Linux.
+                dotfiles, command-line tools, and projects from Darkian Linux. I
+                also make videos for YouTube and TikTok.
               </p>
               <Link className="text-link" href="/contact">
                 Find me elsewhere <ArrowUpRight size={16} />
@@ -241,9 +265,39 @@ export default function Home() {
           </div>
         </motion.section>
 
+        <section className="videos-section" aria-labelledby="videos-heading">
+          <div className="section-heading">
+            <h2 id="videos-heading">videos, too.</h2>
+          </div>
+          <div className="video-links">
+            <a
+              href="https://www.youtube.com/@lordpipon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Youtube size={30} strokeWidth={1.2} />
+              <span>
+                YouTube<small>@lordpipon</small>
+              </span>
+              <ArrowUpRight size={22} />
+            </a>
+            <a
+              href="https://www.tiktok.com/@lordpipon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Music2 size={28} strokeWidth={1.2} />
+              <span>
+                TikTok<small>@lordpipon</small>
+              </span>
+              <ArrowUpRight size={22} />
+            </a>
+          </div>
+        </section>
+
         <section id="skills" className="skills-section">
           <div className="section-heading">
-            <h2>Tools I use</h2>
+            <h2>tools I use</h2>
             <a
               className="text-link"
               href="https://github.com/lordpipon"
@@ -299,7 +353,7 @@ export default function Home() {
 
         <section id="servers" className="servers-section">
           <div className="section-heading">
-            <h2>Minecraft servers</h2>
+            <h2>minecraft servers</h2>
             <span>2023 — 2026</span>
           </div>
           <div className="server-intro">
