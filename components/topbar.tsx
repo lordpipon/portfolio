@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Asterisk, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
   { label: "Work", href: "#projects" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -41,7 +40,7 @@ export function Topbar() {
           window.innerHeight + window.scrollY >=
           document.documentElement.scrollHeight - 4
         )
-          current = "#projects";
+          current = "#about";
         setActive(current);
       });
     };
@@ -65,38 +64,33 @@ export function Topbar() {
   }, [pathname]);
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 mx-auto max-w-[1056px] px-4 sm:px-10">
-      <nav
-        aria-label="Main navigation"
-        className="rounded-2xl border border-border bg-background/90 px-4 shadow-lg shadow-black/5 backdrop-blur-xl sm:px-5"
-      >
-        <div className="flex h-16 items-center justify-between gap-3">
+    <header className="site-header">
+      <nav aria-label="Main navigation" className="nav-inner">
+        <div className="nav-main">
           <Link
             href={hrefFor("#home")}
             className="wordmark"
             onClick={() => setOpen(false)}
           >
             lordpipon
-            <Asterisk aria-hidden="true" size={24} />
           </Link>
-          <div className="hidden items-center gap-1 sm:flex">
+          <div className="desktop-links">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={hrefFor(link.href)}
                 aria-current={active === link.href ? "location" : undefined}
-                className={`rounded-lg px-4 py-2.5 text-xs transition-colors ${active === link.href ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+                className="nav-link"
               >
                 {link.label}
               </Link>
             ))}
           </div>
           <div className="flex items-center gap-2">
-            <ThemeToggle />
             <button
               ref={toggleRef}
               type="button"
-              className="grid size-11 place-items-center rounded-xl border border-border hover:bg-muted sm:hidden"
+              className="mobile-menu-toggle"
               aria-expanded={open}
               aria-controls="mobile-navigation"
               aria-label={open ? "Close menu" : "Open menu"}
@@ -117,7 +111,7 @@ export function Topbar() {
                 href={hrefFor(link.href)}
                 aria-current={active === link.href ? "location" : undefined}
                 onClick={() => setOpen(false)}
-                className={`rounded-lg px-4 py-3 text-sm ${active === link.href ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
+                className="nav-link"
               >
                 {link.label}
               </Link>

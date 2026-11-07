@@ -11,8 +11,8 @@ import {
   ArrowUpRight,
   ArrowLeft,
 } from "lucide-react";
+import { StudioCallout } from "@/components/studio-callout";
 import { Topbar } from "@/components/topbar";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -24,7 +24,7 @@ const socials = [
   {
     name: "Discord",
     handle: "@piponidlo",
-    href: "https://discord.com/users/piponidlo",
+    href: "https://discord.com/app",
     icon: MessageCircle,
   },
   {
@@ -87,18 +87,17 @@ export default function ContactPage() {
       <main id="main" className="portfolio-shell">
         <section id="socials" className="contact-page page-enter">
           <div className="contact-banner">
-            <span className="section-index">LET’S CONNECT</span>
+            <span>Contact</span>
             <h1>
-              Good things start
-              <br />
-              with a <span>hello.</span>
+              Say hello<span>.</span>
             </h1>
-            <p>Have a project in mind, a question, or just want to chat?</p>
-            <Button asChild size="lg">
-              <a href="mailto:lordpipon@gmail.com">
-                <Mail /> Get in touch <ArrowUpRight />
-              </a>
-            </Button>
+            <p>
+              Email me about a project, or find me on one of the platforms
+              below.
+            </p>
+            <a className="contact-email" href="mailto:lordpipon@gmail.com">
+              lordpipon@gmail.com <ArrowUpRight />
+            </a>
           </div>
           <div className="social-grid">
             {socials.map((social) => (
@@ -120,11 +119,12 @@ export default function ContactPage() {
             ))}
           </div>
         </section>
+        <StudioCallout />
         <footer>
           <Link href="/" className="text-link">
             <ArrowLeft size={15} /> Back to portfolio
           </Link>
-          <p>Good conversations make great things.</p>
+          <p>lordpipon.</p>
         </footer>
       </main>
     </>

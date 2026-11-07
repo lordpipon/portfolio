@@ -1,8 +1,6 @@
 "use client";
-
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  Asterisk,
   Github,
   ArrowUpRight,
   ArrowDown,
@@ -16,7 +14,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { Topbar } from "@/components/topbar";
-import { Button } from "@/components/ui/button";
+import { StudioCallout } from "@/components/studio-callout";
+import { BlockMonogram } from "@/components/block-monogram";
 
 const projects = [
   {
@@ -33,7 +32,7 @@ const projects = [
   {
     num: "02",
     title: "Catplay",
-    description: "The newest and latest version. A fork of outpoot/rugplay.",
+    description: "A fork of outpoot/rugplay.",
     tags: ["Project"],
     href: "https://github.com/lordpipon/catplay",
     liveHref: "https://catplay.org",
@@ -42,7 +41,7 @@ const projects = [
   {
     num: "03",
     title: "GoDucky",
-    description: "A project by lordpipon.",
+    description: "An open-source command-line tool.",
     tags: ["CLI", "Tool"],
     href: "https://github.com/go-ducky/cli",
     liveHref: "https://goducky.lordpipon.com",
@@ -79,14 +78,13 @@ const minecraftTimeline = [
 ];
 
 export default function Home() {
-  const reducedMotion = useReducedMotion();
+  const reduced = useReducedMotion();
   const reveal = {
-    initial: reducedMotion ? (false as const) : { opacity: 0, y: 18 },
+    initial: reduced ? (false as const) : { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.1 },
-    transition: { duration: 0.45, ease: "easeOut" as const },
+    viewport: { once: true, amount: 0.12 },
+    transition: { duration: 0.6 },
   };
-
   return (
     <>
       <a href="#main" className="skip-link">
@@ -95,229 +93,237 @@ export default function Home() {
       <Topbar />
       <main id="main" className="portfolio-shell">
         <section id="home" className="hero">
-          <motion.div
-            initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-          >
-            <div className="hero-heading">
-              <h1>
-                Hey, I’m
+          <div className="hero-masthead">
+            <h1>
+              lordpipon<span>.</span>
+            </h1>
+            <span className="hero-year">
+              Portfolio
+              <br />
+              2026
+            </span>
+          </div>
+          <div className="hero-composition">
+            <div className="hero-copy">
+              <h2>
+                Minecraft servers.
                 <br />
-                <span>lordpipon</span>
-                <span className="hero-period">.</span>
-              </h1>
-              <div className="hero-sculpture">
-                <div className="orbital-ring orbital-one" aria-hidden="true" />
-                <div className="orbital-ring orbital-two" aria-hidden="true" />
-                <div
-                  className="orbital-ring orbital-three"
-                  aria-hidden="true"
+                Linux.
+                <br />
+                <span>Small tools.</span>
+              </h2>
+              <p>
+                I build servers, write configs, and make things I want to use.
+              </p>
+              <div className="hero-actions">
+                <a className="action-button" href="#projects">
+                  Selected work <ArrowDown size={17} />
+                </a>
+                <Link className="text-link" href="/contact">
+                  Contact <ArrowUpRight size={17} />
+                </Link>
+              </div>
+              <div className="identity-note">
+                <Image
+                  src="/pfp.png"
+                  alt="lordpipon's cat avatar"
+                  width={34}
+                  height={34}
                 />
-                <div className="avatar-frame">
-                  <Image
-                    src="/pfp.png"
-                    alt="lordpipon's avatar"
-                    width={128}
-                    height={128}
-                    priority
-                  />
-                  <span className="avatar-label">
-                    <Terminal size={13} /> hello, world
-                  </span>
-                </div>
+                <span>
+                  Linux user.
+                  <br />
+                  Minecraft server developer.
+                </span>
               </div>
             </div>
-            <p className="hero-description">
-              Minecraft server developer. Linux enthusiast.
-              <br className="hidden sm:block" /> Building things that work, one
-              config file at a time.
-            </p>
-            <div className="hero-actions">
-              <Button asChild size="lg">
-                <a href="#projects">
-                  Explore my work <ArrowDown />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/contact">
-                  Let’s talk <ArrowUpRight />
-                </Link>
-              </Button>
-            </div>
-          </motion.div>
-          <div className="hero-bottom">
-            <span>PERSONAL PORTFOLIO / 2026</span>
-            <a href="#about">
-              SCROLL TO EXPLORE <ArrowDown size={14} />
-            </a>
+            <BlockMonogram />
           </div>
         </section>
 
-        <motion.section id="about" className="content-section" {...reveal}>
+        <section id="projects" className="work-section">
           <div className="section-heading">
-            <span className="section-index">01 / ABOUT</span>
-            <h2>Curiosity → creation.</h2>
+            <h2>
+              Selected work<span> / 05</span>
+            </h2>
+            <a
+              className="text-link"
+              href="https://github.com/lordpipon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub <ArrowUpRight size={15} />
+            </a>
           </div>
-          <div className="about-grid">
-            <p>
-              I run Minecraft servers, tinker with Linux, and build small tools
-              that solve real problems. Most of my work lives on GitHub — open
-              source, documented, and built to last.
-            </p>
-            <div className="about-note">
-              <Terminal size={20} />
-              <span>
-                Always tinkering.
-                <br />
-                <strong>Always learning.</strong>
-              </span>
-            </div>
-          </div>
-          <div className="stats-grid">
-            {[
-              { value: "10+", label: "Projects" },
-              { value: "8", label: "Minecraft servers" },
-              { value: "4", label: "Years active" },
-              { value: "20+", label: "GitHub repos" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
+          {projects.map((project, i) => (
+            <motion.article
+              key={project.num}
+              {...reveal}
+              className={`work-item work-item-${i}`}
+            >
+              <span className="work-number">{project.num}</span>
+              <div className="work-visual" aria-hidden="true">
+                {i === 0 ? (
+                  <div className="sway-layout">
+                    <div />
+                    <div />
+                    <div />
+                  </div>
+                ) : i === 1 ? (
+                  <div className="pixel-cat">
+                    <i />
+                    <i />
+                    <b />
+                    <b />
+                  </div>
+                ) : i === 2 ? (
+                  <Terminal size={62} strokeWidth={1} />
+                ) : i === 3 ? (
+                  <div className="linux-symbol">
+                    <div />
+                    <div />
+                    <div />
+                  </div>
+                ) : (
+                  <Search size={70} strokeWidth={1} />
+                )}
               </div>
-            ))}
+              <div className="work-info">
+                <div className="work-tags">{project.tags.join(" / ")}</div>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <div className="work-links">
+                  <a
+                    href={project.liveHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${project.title}`}
+                  >
+                    {project.liveLabel ?? "Visit project"}{" "}
+                    <ArrowUpRight size={16} />
+                  </a>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View ${project.title} source code`}
+                  >
+                    <Github size={14} /> Source
+                  </a>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </section>
+
+        <motion.section {...reveal} id="about" className="about-section">
+          <div className="section-heading">
+            <h2>About</h2>
+          </div>
+          <div className="about-body">
+            <p>
+              I run Minecraft servers,
+              <br />
+              tinker with Linux,
+              <br />
+              and build small tools.
+            </p>
+            <div>
+              <p>
+                I’m a developer based in the Czech Republic. I work on Minecraft
+                servers, Linux setups, and web projects. My GitHub includes Sway
+                dotfiles, command-line tools, and projects from Darkian Linux.
+              </p>
+              <Link className="text-link" href="/contact">
+                Find me elsewhere <ArrowUpRight size={16} />
+              </Link>
+            </div>
           </div>
         </motion.section>
 
-        <section id="projects" className="content-section">
+        <section id="skills" className="skills-section">
           <div className="section-heading">
-            <span className="section-index">02 / SELECTED WORK</span>
-            <div className="section-title-row">
-              <h2>Things I’ve built.</h2>
-              <a
-                className="text-link"
-                href="https://github.com/lordpipon"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                All on GitHub <ArrowUpRight size={16} />
-              </a>
-            </div>
-            <p>A collection of experiments, tools, and things I care about.</p>
+            <h2>Tools I use</h2>
+            <a
+              className="text-link"
+              href="https://github.com/lordpipon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              On GitHub <ArrowUpRight size={15} />
+            </a>
           </div>
-          <div className="projects-grid">
-            {projects.map((project, i) => (
-              <motion.article
-                key={project.num}
-                {...reveal}
-                className={`project-card ${i === 0 ? "featured-project" : ""}`}
-              >
-                <div className="project-top">
-                  <div className="project-icon">
-                    <project.icon size={23} />
-                  </div>
-                  <span className="project-number">
-                    {i === 0 ? "FEATURED / " : ""}
-                    {project.num}
-                  </span>
-                </div>
-                <div className="project-copy">
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                </div>
-                <div className="project-tags">
-                  {project.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
+          <div className="skills-grid">
+            {[
+              {
+                title: "Frontend",
+                description: "Interfaces and web projects.",
+                tools: [
+                  "HTML",
+                  "CSS",
+                  "TypeScript",
+                  "React",
+                  "Next.js",
+                  "Tailwind CSS",
+                ],
+              },
+              {
+                title: "Programming & Linux",
+                description: "Tools, configs, and daily development.",
+                tools: ["Python", "C++", "Linux", "Sway", "Git", "GitHub"],
+              },
+              {
+                title: "Servers & deployment",
+                description: "Running the things I build.",
+                tools: [
+                  "Docker",
+                  "Podman",
+                  "Nginx",
+                  "Apache",
+                  "Minecraft servers",
+                ],
+              },
+            ].map((group) => (
+              <div className="skill-group" key={group.title}>
+                <h3>{group.title}</h3>
+                <p>{group.description}</p>
+                <ul>
+                  {group.tools.map((tool) => (
+                    <li key={tool}>{tool}</li>
                   ))}
-                </div>
-                <div className="project-actions">
-                  <Button asChild variant="outline" size="sm">
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`View ${project.title} source code`}
-                    >
-                      <Github /> Source
-                    </a>
-                  </Button>
-                  <Button asChild variant="ghost" size="sm">
-                    <a
-                      href={project.liveHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Visit ${project.title}`}
-                    >
-                      {project.liveLabel ?? "Visit project"}
-                      <ArrowUpRight />
-                    </a>
-                  </Button>
-                </div>
-                {i === 0 && (
-                  <div className="terminal-art" aria-hidden="true">
-                    <div>
-                      <i />
-                      <i />
-                      <i />
-                      <span>~/dotfiles</span>
-                    </div>
-                    <p>
-                      <b>❯</b> whoami
-                      <br />
-                      <span>lordpipon</span>
-                    </p>
-                    <p>
-                      <b>❯</b> cat philosophy.txt
-                      <br />
-                      <span>
-                        less clutter.
-                        <br />
-                        more possibility.
-                      </span>
-                    </p>
-                    <p>
-                      <b>❯</b> <span className="terminal-caret">_</span>
-                    </p>
-                  </div>
-                )}
-              </motion.article>
+                </ul>
+              </div>
             ))}
           </div>
         </section>
 
-        <section id="servers" className="content-section">
+        <section id="servers" className="servers-section">
           <div className="section-heading">
-            <span className="section-index">03 / MINECRAFT</span>
-            <h2>More than just blocks.</h2>
-            <p>
-              Building servers and communities since 2023.
-              <br />
-              Each one a different experiment in gameplay.
-            </p>
+            <h2>Minecraft servers</h2>
+            <span>2023 — 2026</span>
+          </div>
+          <div className="server-intro">
+            <Gamepad2 size={24} strokeWidth={1.3} />
+            <p>The servers I’ve worked on over the years.</p>
           </div>
           <div className="timeline">
             {minecraftTimeline.map((entry) => (
-              <motion.div className="timeline-row" key={entry.year} {...reveal}>
-                <span className="timeline-year">{entry.year}</span>
+              <motion.div key={entry.year} {...reveal} className="timeline-row">
+                <span>{entry.year}</span>
                 <div>
                   {entry.servers.map((server) => (
-                    <span className="server-chip" key={server}>
-                      <Gamepad2 size={15} />
-                      {server}
-                    </span>
+                    <span key={server}>{server}</span>
                   ))}
                 </div>
               </motion.div>
             ))}
           </div>
         </section>
-
+        <StudioCallout />
         <footer>
-          <a href="#home" className="wordmark">
-            lordpipon
-            <Asterisk aria-hidden="true" size={24} />
-          </a>
-          <p>Built with care. Always a work in progress.</p>
+          <Link href="/" className="wordmark">
+            lordpipon.
+          </Link>
           <a href="#home" className="text-link">
             Back to top <ArrowUp size={15} />
           </a>
