@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
 import { DepthEffects } from "@/components/depth-effects";
 
-const inter = Inter({
-  variable: "--font-inter",
+const mono = IBM_Plex_Mono({
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex",
   subsets: ["latin"],
 });
 
@@ -30,19 +31,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} min-h-screen bg-background font-sans antialiased`}
+        className={`${mono.variable} min-h-screen bg-background font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
+          forcedTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="ambient-background" aria-hidden="true">
-            <div className="ambient-grid" />
-            <div className="ambient-glow ambient-glow-one" />
-            <div className="ambient-glow ambient-glow-two" />
-          </div>
           <DepthEffects />
           {children}
         </ThemeProvider>
